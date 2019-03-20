@@ -1,7 +1,5 @@
 package com.andysong.wanandroid;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,10 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.andysong.wanandroid.core.BaseActivity;
@@ -22,15 +23,20 @@ import com.andysong.wanandroid.ui.view.IndexFragment;
 import com.andysong.wanandroid.ui.view.IndexLastFragment;
 import com.andysong.wanandroid.ui.view.IndexSettingFragment;
 import com.andysong.wanandroid.ui.view.IndexTaskFragment;
+import com.andysong.wanandroid.utils.CommonExKt;
 import com.andysong.wanandroid.widget.AnimatedImageView;
 import com.andysong.wanandroid.widget.AnimatedTextView;
 import com.andysong.wanandroid.widget.ArcView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity {
-
-
+/**
+ * @author AndySong on 2019/3/20
+ * @Blog https://github.com/songzhixiang
+ */
+public class IndexActivity extends BaseActivity {
     @BindView(R.id.arcView)
     ArcView mArcView;
     @BindView(R.id.arcImage)
@@ -39,8 +45,8 @@ public class MainActivity extends BaseActivity {
     AnimatedTextView toolbarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.container)
-    FrameLayout container;
+    @BindView(R.id.fl_container)
+    FrameLayout flContainer;
     @BindView(R.id.navigation)
     BottomNavigationView mBottomBar;
     @BindView(R.id.mainView)
@@ -64,12 +70,6 @@ public class MainActivity extends BaseActivity {
 
     private BaseFragment[] mFragments = new BaseFragment[5];
 
-    public static void start(Context context) {
-        Intent starter = new Intent(context, MainActivity.class);
-
-        context.startActivity(starter);
-    }
-
     @Override
     protected int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_main;
@@ -77,7 +77,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData(@Nullable Bundle savedInstanceState) {
-        BaseFragment firstFragment = (BaseFragment) findFragment(IndexFragment.class);
+
+        BaseFragment firstFragment = (BaseFragment) findFragment(com.andysong.wanandroid.ui.view.IndexFragment.class);
         if (firstFragment == null) {
             mFragments[FIRST] = IndexFragment.newInstance();
             mFragments[SECOND] = IndexTaskFragment.newInstance();
@@ -101,12 +102,6 @@ public class MainActivity extends BaseActivity {
             mFragments[FOURTH] = (BaseFragment) findFragment(IndexSettingFragment.class);
             mFragments[FIVE] = (BaseFragment) findFragment(IndexLastFragment.class);
         }
-
-        initViews();
-    }
-
-    private void initViews() {
-
         mBottomBar.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
         mBottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -160,12 +155,68 @@ public class MainActivity extends BaseActivity {
         });
 
         mDrawerLayout.setDrawerElevation(0F);
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View view, float v) {
+                mCardView.setTranslationX(view.getWidth() * v);
+                CommonExKt.setScale(mCardView,1 - v / 4);
+                mCardView.setCardElevation(v*CommonExKt.toPx(10,IndexActivity.this));
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View view) {
+                handleDrawerOpen();
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View view) {
+                handleDrawerClose();
+            }
+
+            @Override
+            public void onDrawerStateChanged(int i) {
+
+            }
+        });
 
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
-
-
     }
 
+
+    private void handleDrawerOpen() {
+        if (!isArcIcon) {
+            setArcArrowState();
+        }
+        isDrawerOpened = true;
+    }
+
+    private void handleDrawerClose(){
+        if (!isArcIcon && isDrawerOpened) {
+            setArcHamburgerIconState();
+        }
+        isDrawerOpened = false;
+    }
+
+
+    private void setArcHamburgerIconState() {
+        mArcView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        mAnimatedImageView.setAnimatedImage(R.drawable.hamb,0L);
+    }
+
+    private void setArcArrowState() {
+        mArcView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IndexActivity.super.onBackPressed();
+            }
+        });
+        mAnimatedImageView.setAnimatedImage(R.drawable.arrow_left,0L);
+    }
 
 
 
