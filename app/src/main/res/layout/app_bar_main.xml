@@ -86,7 +86,7 @@
         app:labelVisibilityMode="labeled"
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="?android:attr/windowBackground"
         android:layout_gravity="bottom"
         app:itemTextColor="@drawable/bottom_navigation_selector"

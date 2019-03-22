@@ -2,9 +2,9 @@ package com.andysong.wanandroid.di.component;
 
 import android.app.Activity;
 
-import com.andysong.wanandroid.IndexFragment;
 import com.andysong.wanandroid.di.module.FragmentModule;
 import com.andysong.wanandroid.di.scope.FragmentScope;
+import com.andysong.wanandroid.ui.view.IndexFragment;
 
 import dagger.Component;
 

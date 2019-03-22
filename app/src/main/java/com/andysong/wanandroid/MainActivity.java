@@ -1,7 +1,5 @@
 package com.andysong.wanandroid;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,10 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.andysong.wanandroid.core.BaseActivity;
@@ -22,6 +22,7 @@ import com.andysong.wanandroid.ui.view.IndexFragment;
 import com.andysong.wanandroid.ui.view.IndexLastFragment;
 import com.andysong.wanandroid.ui.view.IndexSettingFragment;
 import com.andysong.wanandroid.ui.view.IndexTaskFragment;
+import com.andysong.wanandroid.utils.CommonExKt;
 import com.andysong.wanandroid.widget.AnimatedImageView;
 import com.andysong.wanandroid.widget.AnimatedTextView;
 import com.andysong.wanandroid.widget.ArcView;
@@ -29,8 +30,6 @@ import com.andysong.wanandroid.widget.ArcView;
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity {
-
-
     @BindView(R.id.arcView)
     ArcView mArcView;
     @BindView(R.id.arcImage)
@@ -39,8 +38,8 @@ public class MainActivity extends BaseActivity {
     AnimatedTextView toolbarTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.container)
-    FrameLayout container;
+    @BindView(R.id.fl_container)
+    FrameLayout flContainer;
     @BindView(R.id.navigation)
     BottomNavigationView mBottomBar;
     @BindView(R.id.mainView)
@@ -54,7 +53,7 @@ public class MainActivity extends BaseActivity {
     public static final int SECOND = 1;
     public static final int THIRD = 2;
     public static final int FOURTH = 3;
-    public static final int FIVE = 4;
+
 
     private boolean isDrawerOpened = false;
 
@@ -62,13 +61,7 @@ public class MainActivity extends BaseActivity {
 
     private int preSelected = -1;
 
-    private BaseFragment[] mFragments = new BaseFragment[5];
-
-    public static void start(Context context) {
-        Intent starter = new Intent(context, MainActivity.class);
-
-        context.startActivity(starter);
-    }
+    private BaseFragment[] mFragments = new BaseFragment[4];
 
     @Override
     protected int initView(@Nullable Bundle savedInstanceState) {
@@ -77,37 +70,31 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData(@Nullable Bundle savedInstanceState) {
-        BaseFragment firstFragment = (BaseFragment) findFragment(IndexFragment.class);
+
+        BaseFragment firstFragment = findFragment(IndexFragment.class);
         if (firstFragment == null) {
             mFragments[FIRST] = IndexFragment.newInstance();
             mFragments[SECOND] = IndexTaskFragment.newInstance();
             mFragments[THIRD] = IndexDataFragment.newInstance();
             mFragments[FOURTH] = IndexSettingFragment.newInstance();
-            mFragments[FIVE] = IndexLastFragment.newInstance();
+
 
             loadMultipleRootFragment(R.id.fl_container, FIRST,
                     mFragments[FIRST],
                     mFragments[SECOND],
                     mFragments[THIRD],
-                    mFragments[FOURTH],
-                    mFragments[FIVE]);
+                    mFragments[FOURTH]);
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
 
             // 这里我们需要拿到mFragments的引用
             mFragments[FIRST] = firstFragment;
-            mFragments[SECOND] = (BaseFragment) findFragment(IndexTaskFragment.class);
-            mFragments[THIRD] = (BaseFragment) findFragment(IndexDataFragment.class);
-            mFragments[FOURTH] = (BaseFragment) findFragment(IndexSettingFragment.class);
-            mFragments[FIVE] = (BaseFragment) findFragment(IndexLastFragment.class);
+            mFragments[SECOND] = findFragment(IndexTaskFragment.class);
+            mFragments[THIRD] = findFragment(IndexDataFragment.class);
+            mFragments[FOURTH] = findFragment(IndexSettingFragment.class);
+
         }
-
-        initViews();
-    }
-
-    private void initViews() {
-
-        mBottomBar.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+        mBottomBar.setItemIconTintList(null);
         mBottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -145,29 +132,73 @@ public class MainActivity extends BaseActivity {
                         }
                         preSelected = FOURTH;
                         return true;
-
-                    case R.id.navigation_search:
-                        if (preSelected == -1){
-                            showHideFragment(mFragments[FIVE]);
-                        }else {
-                            showHideFragment(mFragments[FIVE],mFragments[preSelected]);
-                        }
-                        preSelected = FIVE;
-                        break;
                 }
                 return false;
             }
         });
 
         mDrawerLayout.setDrawerElevation(0F);
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View view, float v) {
+                mCardView.setTranslationX(view.getWidth() * v);
+                CommonExKt.setScale(mCardView,1 - v / 4);
+                mCardView.setCardElevation(v*CommonExKt.toPx(10,MainActivity.this));
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View view) {
+                handleDrawerOpen();
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View view) {
+                handleDrawerClose();
+            }
+
+            @Override
+            public void onDrawerStateChanged(int i) {
+
+            }
+        });
 
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
-
-
     }
 
 
+    private void handleDrawerOpen() {
+        if (!isArcIcon) {
+            setArcArrowState();
+        }
+        isDrawerOpened = true;
+    }
+
+    private void handleDrawerClose(){
+        if (!isArcIcon && isDrawerOpened) {
+            setArcHamburgerIconState();
+        }
+        isDrawerOpened = false;
+    }
 
 
+    private void setArcHamburgerIconState() {
+        mArcView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        mAnimatedImageView.setAnimatedImage(R.drawable.hamb,0L);
+    }
+
+    private void setArcArrowState() {
+        mArcView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.super.onBackPressed();
+            }
+        });
+        mAnimatedImageView.setAnimatedImage(R.drawable.arrow_left,0L);
+    }
 
 }
