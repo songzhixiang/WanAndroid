@@ -1,6 +1,8 @@
 package com.andysong.wanandroid.model;
 
+import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.BannerEntity;
+import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.model.http.HttpHelper;
 import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse;
 
@@ -26,5 +28,11 @@ public class DataManager implements HttpHelper {
     @Override
     public Flowable<WanAndroidHttpResponse<List<BannerEntity>>> getBanner() {
         return mHttpHelper.getBanner();
+    }
+
+    @NotNull
+    @Override
+    public Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>> getArticle() {
+        return mHttpHelper.getArticle();
     }
 }

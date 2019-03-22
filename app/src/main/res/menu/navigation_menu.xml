@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single"
+        android:id="@+id/nav_favor">
+        <item
+            android:title="照相"
+            android:id="@+id/nav_favor_"
+            android:icon="@drawable/heart_full"/>
+
+    </group>
+</menu>

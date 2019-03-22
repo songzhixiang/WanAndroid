@@ -1,6 +1,8 @@
 package com.andysong.wanandroid.core.http;
 
+import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.BannerEntity;
+import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse;
 
 import java.util.List;
@@ -18,5 +20,6 @@ public interface MyApis {
     @GET("banner/json")
     Flowable<WanAndroidHttpResponse<List<BannerEntity>>> getBanner();
 
-
+    @GET("article/list/0/json")
+    Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>> getArticle();
 }

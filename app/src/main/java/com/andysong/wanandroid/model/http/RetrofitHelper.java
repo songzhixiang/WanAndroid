@@ -2,7 +2,9 @@ package com.andysong.wanandroid.model.http;
 
 import com.andysong.wanandroid.core.http.GoldApis;
 import com.andysong.wanandroid.core.http.MyApis;
+import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.BannerEntity;
+import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse;
 
 import org.jetbrains.annotations.NotNull;
@@ -32,5 +34,11 @@ public class RetrofitHelper implements HttpHelper {
     @Override
     public Flowable<WanAndroidHttpResponse<List<BannerEntity>>> getBanner() {
         return mMyApiService.getBanner();
+    }
+
+    @NotNull
+    @Override
+    public Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>> getArticle() {
+        return mMyApiService.getArticle();
     }
 }

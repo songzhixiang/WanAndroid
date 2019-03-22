@@ -4,9 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
@@ -14,12 +12,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.andysong.wanandroid.core.BaseActivity;
 import com.andysong.wanandroid.core.BaseFragment;
 import com.andysong.wanandroid.ui.view.IndexDataFragment;
 import com.andysong.wanandroid.ui.view.IndexFragment;
-import com.andysong.wanandroid.ui.view.IndexLastFragment;
 import com.andysong.wanandroid.ui.view.IndexSettingFragment;
 import com.andysong.wanandroid.ui.view.IndexTaskFragment;
 import com.andysong.wanandroid.utils.CommonExKt;
@@ -28,6 +27,8 @@ import com.andysong.wanandroid.widget.AnimatedTextView;
 import com.andysong.wanandroid.widget.ArcView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.arcView)
@@ -44,8 +45,7 @@ public class MainActivity extends BaseActivity {
     BottomNavigationView mBottomBar;
     @BindView(R.id.mainView)
     CardView mCardView;
-    @BindView(R.id.navView)
-    NavigationView navView;
+
     @BindView(R.id.drawerLayout)
     DrawerLayout mDrawerLayout;
 
@@ -55,9 +55,10 @@ public class MainActivity extends BaseActivity {
     public static final int FOURTH = 3;
 
 
+
     private boolean isDrawerOpened = false;
 
-    private boolean isArcIcon = false;
+
 
     private int preSelected = -1;
 
@@ -71,29 +72,10 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData(@Nullable Bundle savedInstanceState) {
 
-        BaseFragment firstFragment = findFragment(IndexFragment.class);
-        if (firstFragment == null) {
-            mFragments[FIRST] = IndexFragment.newInstance();
-            mFragments[SECOND] = IndexTaskFragment.newInstance();
-            mFragments[THIRD] = IndexDataFragment.newInstance();
-            mFragments[FOURTH] = IndexSettingFragment.newInstance();
+        loadFragment();
 
+        setArcHamburgerIconState();
 
-            loadMultipleRootFragment(R.id.fl_container, FIRST,
-                    mFragments[FIRST],
-                    mFragments[SECOND],
-                    mFragments[THIRD],
-                    mFragments[FOURTH]);
-        } else {
-            // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
-
-            // 这里我们需要拿到mFragments的引用
-            mFragments[FIRST] = firstFragment;
-            mFragments[SECOND] = findFragment(IndexTaskFragment.class);
-            mFragments[THIRD] = findFragment(IndexDataFragment.class);
-            mFragments[FOURTH] = findFragment(IndexSettingFragment.class);
-
-        }
         mBottomBar.setItemIconTintList(null);
         mBottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -136,14 +118,13 @@ public class MainActivity extends BaseActivity {
                 return false;
             }
         });
-
         mDrawerLayout.setDrawerElevation(0F);
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull View view, float v) {
                 mCardView.setTranslationX(view.getWidth() * v);
-                CommonExKt.setScale(mCardView,1 - v / 4);
-                mCardView.setCardElevation(v*CommonExKt.toPx(10,MainActivity.this));
+                CommonExKt.setScale(mCardView, 1 - v / 4);
+                mCardView.setCardElevation(v * CommonExKt.toPx(10, MainActivity.this));
             }
 
             @Override
@@ -163,42 +144,77 @@ public class MainActivity extends BaseActivity {
         });
 
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
+
+
+    }
+
+    private void loadFragment() {
+        BaseFragment firstFragment = findFragment(IndexFragment.class);
+        if (firstFragment == null) {
+            mFragments[FIRST] = IndexFragment.newInstance();
+            mFragments[SECOND] = IndexTaskFragment.newInstance();
+            mFragments[THIRD] = IndexDataFragment.newInstance();
+            mFragments[FOURTH] = IndexSettingFragment.newInstance();
+
+
+            loadMultipleRootFragment(R.id.fl_container, FIRST,
+                    mFragments[FIRST],
+                    mFragments[SECOND],
+                    mFragments[THIRD],
+                    mFragments[FOURTH]);
+        } else {
+            // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
+
+            // 这里我们需要拿到mFragments的引用
+            mFragments[FIRST] = firstFragment;
+            mFragments[SECOND] = findFragment(IndexTaskFragment.class);
+            mFragments[THIRD] = findFragment(IndexDataFragment.class);
+            mFragments[FOURTH] = findFragment(IndexSettingFragment.class);
+
+        }
     }
 
 
     private void handleDrawerOpen() {
-        if (!isArcIcon) {
-            setArcArrowState();
-        }
+        setArcArrowState();
         isDrawerOpened = true;
     }
 
-    private void handleDrawerClose(){
-        if (!isArcIcon && isDrawerOpened) {
-            setArcHamburgerIconState();
-        }
+    private void handleDrawerClose() {
+        setArcHamburgerIconState();
         isDrawerOpened = false;
     }
 
 
     private void setArcHamburgerIconState() {
-        mArcView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDrawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-        mAnimatedImageView.setAnimatedImage(R.drawable.hamb,0L);
+
+        mAnimatedImageView.setAnimatedImage(R.drawable.hamb, 0L);
     }
 
     private void setArcArrowState() {
-        mArcView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.super.onBackPressed();
-            }
-        });
-        mAnimatedImageView.setAnimatedImage(R.drawable.arrow_left,0L);
+
+        mAnimatedImageView.setAnimatedImage(R.drawable.arrow_left, 0L);
     }
 
+
+
+    @OnClick(R.id.arcView)
+    public void onViewClicked() {
+        if (isDrawerOpened){
+            mDrawerLayout.closeDrawers();
+        }else {
+            mDrawerLayout.openDrawer(GravityCompat.START);
+        }
+
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        if (isDrawerOpened){
+            mDrawerLayout.closeDrawers();
+        }else {
+            super.onBackPressedSupport();
+        }
+
+    }
 }

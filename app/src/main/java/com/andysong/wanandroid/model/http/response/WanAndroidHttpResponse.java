@@ -7,7 +7,7 @@ package com.andysong.wanandroid.model.http.response;
 public class WanAndroidHttpResponse<T> {
 
     private String errorMsg;
-    private String errorCode;
+    private int errorCode;
     private T data;
 
     public T getData() {
@@ -26,11 +26,11 @@ public class WanAndroidHttpResponse<T> {
         this.errorMsg = errorMsg;
     }
 
-    public String getErrorCode() {
+    public int getErrorCode() {
         return errorCode;
     }
 
-    public void setErrorCode(String errorCode) {
+    public void setErrorCode(int errorCode) {
         this.errorCode = errorCode;
     }
 }

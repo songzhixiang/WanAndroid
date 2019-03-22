@@ -74,6 +74,10 @@ dependencies {
 
     implementation rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
 
+    implementation rootProject.ext.dependencies["utilcode"]
+
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
+
     implementation 'com.jeremyliao:live-event-bus:1.2.3'
 
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha2'

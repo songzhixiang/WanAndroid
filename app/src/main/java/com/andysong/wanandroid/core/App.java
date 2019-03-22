@@ -10,6 +10,7 @@ import com.andysong.wanandroid.di.component.AppComponent;
 import com.andysong.wanandroid.di.component.DaggerAppComponent;
 import com.andysong.wanandroid.di.module.AppModule;
 import com.andysong.wanandroid.di.module.HttpModule;
+import com.blankj.utilcode.util.Utils;
 
 /**
  * @author AndySong on 2019/3/20
@@ -29,6 +30,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        Utils.init(this);
         registerActivityLifecycleCallbacks(new AppManagerCall());
         registerComponentCallbacks(new ComponentCallbacks2() {
             @Override
