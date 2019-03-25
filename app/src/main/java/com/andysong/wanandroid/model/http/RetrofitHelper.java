@@ -10,10 +10,12 @@ import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
+import okhttp3.ResponseBody;
 
 /**
  * @author AndySong on 2019/3/20
@@ -40,5 +42,11 @@ public class RetrofitHelper implements HttpHelper {
     @Override
     public Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>> getArticle() {
         return mMyApiService.getArticle();
+    }
+
+    @NotNull
+    @Override
+    public Flowable<ResponseBody> login(@NotNull Map<String, String> map) {
+        return mMyApiService.login(map);
     }
 }

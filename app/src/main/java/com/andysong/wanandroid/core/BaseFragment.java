@@ -29,7 +29,7 @@ public abstract class BaseFragment extends Fragment implements ISupportFragment 
 
     private Unbinder mUnBinder;
     protected View mView;
-
+    protected boolean isInited = false;
 
     final SupportFragmentDelegate mDelegate = new SupportFragmentDelegate(this);
     protected FragmentActivity _mActivity;
@@ -178,6 +178,7 @@ public abstract class BaseFragment extends Fragment implements ISupportFragment 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         mDelegate.onLazyInitView(savedInstanceState);
+        isInited = true;
         initEventAndData(savedInstanceState);
     }
 

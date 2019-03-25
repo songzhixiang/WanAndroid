@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
+    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/bg_color"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        app:srcCompat="@drawable/heart_full"
+        android:src="@drawable/ic_avatar_placeholder"
         android:id="@+id/userAvatar"
         android:layout_width="90dp"
         android:layout_height="90dp"
@@ -21,14 +21,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        tools:text="WanAndroid"
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
+        android:text="WanAndroid"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@android:color/black"
         android:textSize="25sp"
@@ -36,19 +36,77 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userAvatar" />
 
+
     <TextView
-        tools:text="Best Clinet of Android"
-        android:id="@+id/userInfo"
+        android:id="@+id/tv_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:drawableLeft="@drawable/ic_shortcut_pop"
+        android:drawablePadding="16dp"
         android:gravity="center"
+        android:text="我的收藏"
+        android:textSize="16sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userName" />
+
+    <TextView
+        android:id="@+id/tv_recent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        android:drawableLeft="@drawable/ic_shortcut_recent"
+        android:drawablePadding="16dp"
+        android:gravity="center"
+        android:text="历史浏览"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_favorite" />
+
+    <TextView
+        android:id="@+id/tv_follow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        android:drawableLeft="@drawable/ic_shortcut_following"
+        android:drawablePadding="16dp"
+        android:gravity="center"
+        android:text="我的关注"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_recent" />
+
+    <TextView
+        android:id="@+id/tv_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        android:drawableLeft="@drawable/ic_shortcut_debuts"
+        android:drawablePadding="16dp"
+        android:gravity="center"
+        android:text="我的点赞"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_follow" />
 
 </android.support.constraint.ConstraintLayout>

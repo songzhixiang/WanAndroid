@@ -19,8 +19,9 @@ import com.andysong.wanandroid.core.BaseActivity;
 import com.andysong.wanandroid.core.BaseFragment;
 import com.andysong.wanandroid.ui.view.IndexDataFragment;
 import com.andysong.wanandroid.ui.view.IndexFragment;
-import com.andysong.wanandroid.ui.view.IndexSettingFragment;
+import com.andysong.wanandroid.ui.view.IndexLastFragment;
 import com.andysong.wanandroid.ui.view.IndexTaskFragment;
+import com.andysong.wanandroid.ui.view.LoginActivity;
 import com.andysong.wanandroid.utils.CommonExKt;
 import com.andysong.wanandroid.widget.AnimatedImageView;
 import com.andysong.wanandroid.widget.AnimatedTextView;
@@ -45,9 +46,20 @@ public class MainActivity extends BaseActivity {
     BottomNavigationView mBottomBar;
     @BindView(R.id.mainView)
     CardView mCardView;
-
     @BindView(R.id.drawerLayout)
     DrawerLayout mDrawerLayout;
+    @BindView(R.id.userAvatar)
+    ImageView userAvatar;
+    @BindView(R.id.userName)
+    TextView userName;
+    @BindView(R.id.tv_favorite)
+    TextView tvFavorite;
+    @BindView(R.id.tv_recent)
+    TextView tvRecent;
+    @BindView(R.id.tv_follow)
+    TextView tvFollow;
+    @BindView(R.id.tv_star)
+    TextView tvStar;
 
     public static final int FIRST = 0;
     public static final int SECOND = 1;
@@ -55,9 +67,7 @@ public class MainActivity extends BaseActivity {
     public static final int FOURTH = 3;
 
 
-
     private boolean isDrawerOpened = false;
-
 
 
     private int preSelected = -1;
@@ -143,6 +153,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        //去除阴影
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
 
 
@@ -154,7 +165,7 @@ public class MainActivity extends BaseActivity {
             mFragments[FIRST] = IndexFragment.newInstance();
             mFragments[SECOND] = IndexTaskFragment.newInstance();
             mFragments[THIRD] = IndexDataFragment.newInstance();
-            mFragments[FOURTH] = IndexSettingFragment.newInstance();
+            mFragments[FOURTH] = IndexLastFragment.newInstance();
 
 
             loadMultipleRootFragment(R.id.fl_container, FIRST,
@@ -169,7 +180,7 @@ public class MainActivity extends BaseActivity {
             mFragments[FIRST] = firstFragment;
             mFragments[SECOND] = findFragment(IndexTaskFragment.class);
             mFragments[THIRD] = findFragment(IndexDataFragment.class);
-            mFragments[FOURTH] = findFragment(IndexSettingFragment.class);
+            mFragments[FOURTH] = findFragment(IndexLastFragment.class);
 
         }
     }
@@ -198,23 +209,40 @@ public class MainActivity extends BaseActivity {
 
 
 
-    @OnClick(R.id.arcView)
-    public void onViewClicked() {
-        if (isDrawerOpened){
+    @Override
+    public void onBackPressedSupport() {
+        if (isDrawerOpened) {
             mDrawerLayout.closeDrawers();
-        }else {
-            mDrawerLayout.openDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressedSupport();
         }
 
     }
 
-    @Override
-    public void onBackPressedSupport() {
-        if (isDrawerOpened){
-            mDrawerLayout.closeDrawers();
-        }else {
-            super.onBackPressedSupport();
-        }
 
+
+    @OnClick({R.id.userAvatar, R.id.tv_favorite, R.id.tv_recent, R.id.tv_follow, R.id.tv_star,R.id.arcView})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.userAvatar:
+                LoginActivity.start(MainActivity.this);
+                break;
+            case R.id.tv_favorite:
+                break;
+            case R.id.tv_recent:
+                break;
+            case R.id.tv_follow:
+                break;
+            case R.id.tv_star:
+                break;
+
+            case R.id.arcView:
+                if (isDrawerOpened) {
+                    mDrawerLayout.closeDrawers();
+                } else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+                break;
+        }
     }
 }

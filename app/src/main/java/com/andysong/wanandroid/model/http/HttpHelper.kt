@@ -5,6 +5,7 @@ import com.andysong.wanandroid.model.bean.BannerEntity
 import com.andysong.wanandroid.model.bean.PageList
 import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse
 import io.reactivex.Flowable
+import okhttp3.ResponseBody
 
 /**
  * @author AndySong on 2019/3/20
@@ -15,4 +16,6 @@ interface HttpHelper{
      fun getBanner(): Flowable<WanAndroidHttpResponse<List<BannerEntity>>>
 
      fun getArticle(): Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>>
+
+     fun login(map:Map<String,String>): Flowable<ResponseBody>
 }
