@@ -74,4 +74,17 @@ public class PageList<T> {
     public void setTotal(int total) {
         this.total = total;
     }
+
+
+    public boolean hasNext() {
+        return curPage < pageCount && notEmpty();
+    }
+
+    public boolean hasNextStartWithZero() {
+        return curPage + 1 < pageCount && notEmpty();
+    }
+
+    public boolean notEmpty() {
+        return data != null && data.size() > 0;
+    }
 }

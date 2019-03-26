@@ -1,5 +1,7 @@
 package com.andysong.wanandroid;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +22,7 @@ import com.andysong.wanandroid.core.BaseFragment;
 import com.andysong.wanandroid.ui.view.IndexDataFragment;
 import com.andysong.wanandroid.ui.view.IndexFragment;
 import com.andysong.wanandroid.ui.view.IndexLastFragment;
-import com.andysong.wanandroid.ui.view.IndexTaskFragment;
+import com.andysong.wanandroid.ui.view.IndexKnowledgeFragment;
 import com.andysong.wanandroid.ui.view.LoginActivity;
 import com.andysong.wanandroid.utils.CommonExKt;
 import com.andysong.wanandroid.widget.AnimatedImageView;
@@ -28,7 +30,6 @@ import com.andysong.wanandroid.widget.AnimatedTextView;
 import com.andysong.wanandroid.widget.ArcView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
@@ -163,7 +164,7 @@ public class MainActivity extends BaseActivity {
         BaseFragment firstFragment = findFragment(IndexFragment.class);
         if (firstFragment == null) {
             mFragments[FIRST] = IndexFragment.newInstance();
-            mFragments[SECOND] = IndexTaskFragment.newInstance();
+            mFragments[SECOND] = IndexKnowledgeFragment.newInstance();
             mFragments[THIRD] = IndexDataFragment.newInstance();
             mFragments[FOURTH] = IndexLastFragment.newInstance();
 
@@ -178,7 +179,7 @@ public class MainActivity extends BaseActivity {
 
             // 这里我们需要拿到mFragments的引用
             mFragments[FIRST] = firstFragment;
-            mFragments[SECOND] = findFragment(IndexTaskFragment.class);
+            mFragments[SECOND] = findFragment(IndexKnowledgeFragment.class);
             mFragments[THIRD] = findFragment(IndexDataFragment.class);
             mFragments[FOURTH] = findFragment(IndexLastFragment.class);
 
@@ -245,4 +246,11 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
+
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, MainActivity.class);
+        context.startActivity(starter);
+    }
+
 }

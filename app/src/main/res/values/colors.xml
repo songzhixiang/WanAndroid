@@ -7,10 +7,11 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorSecondaryText">#939393</color>
     <color name="colorPrimaryText">#000000</color>
-    <color name="cyan">#00BCD4</color>
+    <color name="colorCyan">#00BCD4</color>
 
-    <color name="green">#009f5a</color>
-    <color name="blue_gray">#607D8B</color>
+    <color name="colorGreen">#009f5a</color>
+    <color name="colorBlueGray">#607D8B</color>
 
-    <color name="bg_color">#fafafa</color>
+    <color name="colorBackGround">#fafafa</color>
+    <color name="colorDivider">#dedede</color>
 </resources>

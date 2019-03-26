@@ -3,6 +3,7 @@ package com.andysong.wanandroid.core.http;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.BannerEntity;
 import com.andysong.wanandroid.model.bean.PageList;
+import com.andysong.wanandroid.model.bean.TreeEntity;
 import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * @author AndySong on 2019/3/20
@@ -33,8 +35,8 @@ public interface MyApis {
 
 
     //获取首页文章
-    @GET("article/list/0/json")
-    Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>> getArticle();
+    @GET("article/list/{page}/json")
+    Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>> getArticle(@Path("page") int page);
 
     //登陆
     @FormUrlEncoded
@@ -45,6 +47,11 @@ public interface MyApis {
     @POST("user/login")
     Flowable<ResponseBody> login2(@Body RequestBody requestBody);
 
+
+    /*=======知识体系======*/
+
+    @GET("tree/json")
+    Flowable<WanAndroidHttpResponse<List<TreeEntity>>> getKnowledgeTree();
 
 
 }

@@ -3,6 +3,7 @@ package com.andysong.wanandroid.model.http
 import com.andysong.wanandroid.model.bean.ArticleEntity
 import com.andysong.wanandroid.model.bean.BannerEntity
 import com.andysong.wanandroid.model.bean.PageList
+import com.andysong.wanandroid.model.bean.TreeEntity
 import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse
 import io.reactivex.Flowable
 import okhttp3.ResponseBody
@@ -15,7 +16,9 @@ interface HttpHelper{
 
      fun getBanner(): Flowable<WanAndroidHttpResponse<List<BannerEntity>>>
 
-     fun getArticle(): Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>>
+     fun getArticle(page:Int): Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>>
 
      fun login(map:Map<String,String>): Flowable<ResponseBody>
+
+     fun getKnowledgeTree():Flowable<WanAndroidHttpResponse<List<TreeEntity>>>
 }

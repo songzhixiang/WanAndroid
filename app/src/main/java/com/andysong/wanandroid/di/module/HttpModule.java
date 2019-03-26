@@ -112,9 +112,9 @@ public class HttpModule {
 //        设置统一的请求头部参数
 //        builder.addInterceptor(apikey);
         //设置缓存
-        builder.addNetworkInterceptor(cacheInterceptor);
-        builder.addInterceptor(cacheInterceptor);
-        builder.cache(cache);
+//        builder.addNetworkInterceptor(cacheInterceptor);
+//        builder.addInterceptor(cacheInterceptor);
+//        builder.cache(cache);
         //设置超时
         builder.connectTimeout(10, TimeUnit.SECONDS);
         builder.readTimeout(20, TimeUnit.SECONDS);
