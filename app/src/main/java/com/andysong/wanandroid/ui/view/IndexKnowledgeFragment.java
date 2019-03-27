@@ -39,8 +39,7 @@ public class IndexKnowledgeFragment extends BaseMVPFragment<KnowledgePresenter> 
     RecyclerView mRecyclerView;
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.stateView)
-    StateView mStateView;
+
 
 
     public static IndexKnowledgeFragment newInstance() {

@@ -21,7 +21,7 @@ public abstract class RootFragment<T extends BasePresenter> extends BaseMVPFragm
         if (getView() == null) {
             return;
         }
-        mStateView = getView().findViewById(R.id.stateView);
+//        mStateView = getView().findViewById(R.id.stateView);
         if (mStateView == null) {
             throw new IllegalStateException(
                     "The subclass of RootActivity must contain a View named 'view_main'.");

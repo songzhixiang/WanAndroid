@@ -7,19 +7,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.andysong.wanandroid.R;
-import com.andysong.wanandroid.core.RootFragment;
+import com.andysong.wanandroid.core.BaseMVPFragment;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
+import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.ui.contract.IndexContract;
 import com.andysong.wanandroid.ui.presenter.IndexPresenter;
 import com.andysong.wanandroid.ui.view.adapter.IndexAdapter;
 import com.andysong.wanandroid.utils.helpers.IRefreshPage;
-import com.andysong.wanandroid.utils.helpers.RefreshHelper;
-import com.andysong.wanandroid.widget.stateview.StateView;
+import com.andysong.wanandroid.utils.helpers.RefreshLoadMoreHelper;
+import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -27,15 +26,14 @@ import butterknife.BindView;
  * @author AndySong on 2019/3/20
  * @Blog https://github.com/songzhixiang
  */
-public class IndexFragment extends RootFragment<IndexPresenter> implements IRefreshPage,IndexContract.View, BaseQuickAdapter.OnItemClickListener {
+public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements IRefreshPage,IndexContract.View, BaseQuickAdapter.OnItemClickListener {
 
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.stateView)
-    StateView mStateView;
-    private RefreshHelper<ArticleEntity> refreshHelper;
+
+    private RefreshLoadMoreHelper<ArticleEntity> refreshLoadMoreHelper;
 
 
     public static IndexFragment newInstance() {
@@ -55,15 +53,12 @@ public class IndexFragment extends RootFragment<IndexPresenter> implements IRefr
 
     @Override
     protected void initEventAndData(@Nullable Bundle savedInstanceState) {
-        refreshHelper = new RefreshHelper<>(this, mSwipeRefreshLayout, mRecyclerView, IndexAdapter.class);
-        refreshHelper.autoRefresh();
-        refreshHelper.setOnItemClickListener(this);
+        refreshLoadMoreHelper = new RefreshLoadMoreHelper<>(this, mSwipeRefreshLayout, mRecyclerView, IndexAdapter.class);
+        refreshLoadMoreHelper.autoRefresh();
+        refreshLoadMoreHelper.setOnItemClickListener(this);
     }
 
-    @Override
-    protected void onRetry() {
 
-    }
 
     @Override
     protected void initInject() {
@@ -71,15 +66,15 @@ public class IndexFragment extends RootFragment<IndexPresenter> implements IRefr
     }
 
     @Override
-    public void showArticle(List<ArticleEntity> articleEntityList) {
-        refreshHelper.loadSuccess(articleEntityList);
+    public void showArticle(PageList<ArticleEntity> articleEntityList) {
+        refreshLoadMoreHelper.loadSuccess(articleEntityList);
     }
 
 
     @Override
     public void loadData() {
         if (mPresenter != null) {
-            mPresenter.getArticle(0);
+            mPresenter.getArticle(refreshLoadMoreHelper.getCurrPage());
         }
     }
 
@@ -88,13 +83,34 @@ public class IndexFragment extends RootFragment<IndexPresenter> implements IRefr
 
     }
 
+
     @Override
     public void showErrorMsg(@NotNull String msg) {
+        LogUtils.e(msg);
+    }
+
+    @Override
+    public void stateError() {
+        refreshLoadMoreHelper.loadError();
+    }
+
+    @Override
+    public void stateEmpty() {
+
+    }
+
+    @Override
+    public void stateLoading() {
 
     }
 
     @Override
     public void hideLoading() {
+
+    }
+
+    @Override
+    public void stateMain() {
 
     }
 }

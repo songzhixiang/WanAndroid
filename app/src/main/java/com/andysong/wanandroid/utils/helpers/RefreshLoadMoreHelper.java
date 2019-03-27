@@ -66,15 +66,15 @@ public class RefreshLoadMoreHelper<T> implements SwipeRefreshLayout.OnRefreshLis
         });
     }
 
-    public void loadSuccess(WanAndroidHttpResponse<PageList<T>> response) {
-        if (firstPage + 1 == response.getData().getCurPage()) {
+    public void loadSuccess(PageList<T> response) {
+        if (firstPage + 1 == response.getCurPage()) {
             items.clear();
         }
-        items.addAll(response.getData().getData());
+        items.addAll(response.getData());
         if (firstPage == 0) {
-            adapter.setEnableLoadMore(response.getData().hasNextStartWithZero());
+            adapter.setEnableLoadMore(response.hasNextStartWithZero());
         } else {
-            adapter.setEnableLoadMore(response.getData().hasNext());
+            adapter.setEnableLoadMore(response.hasNext());
         }
         if (currPage > firstPage) {
             adapter.loadMoreComplete();
