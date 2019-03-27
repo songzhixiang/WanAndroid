@@ -56,7 +56,7 @@ public abstract class CommonSubscriber<T> extends ResourceSubscriber<T> {
             mView.showErrorMsg("数据加载失败ヽ(≧Д≦)ノ");
         } else {
             mView.showErrorMsg("未知错误ヽ(≧Д≦)ノ");
-            LogUtils.d(e.toString());
+            LogUtils.e(e.toString());
         }
         if (isShowErrorState) {
             mView.stateError();

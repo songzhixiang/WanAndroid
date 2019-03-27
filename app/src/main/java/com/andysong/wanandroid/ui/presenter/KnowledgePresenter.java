@@ -5,6 +5,7 @@ import com.andysong.wanandroid.core.RxUtil;
 import com.andysong.wanandroid.model.DataManager;
 import com.andysong.wanandroid.model.bean.TreeEntity;
 import com.andysong.wanandroid.ui.contract.KnowledgeContract;
+import com.andysong.wanandroid.utils.CommonSubscriber;
 
 import java.util.List;
 
@@ -28,12 +29,12 @@ public class KnowledgePresenter extends RxPresenter<KnowledgeContract.View> impl
     @Override
     public void getKnowledge() {
         addSubscribe(mDataManager.getKnowledgeTree()
-                .compose(RxUtil.rxSchedulerHelper())
+                .compose(RxUtil.rxSchedulerHelper(null))
                 .compose(RxUtil.handleResult())
-                .subscribe(new Consumer<List<TreeEntity>>() {
+                .subscribeWith(new CommonSubscriber<List<TreeEntity>>(mView,true) {
                     @Override
-                    public void accept(List<TreeEntity> treeEntities) throws Exception {
-                        mView.showKnowledge(treeEntities);
+                    public void onNext(List<TreeEntity> treeEntityList) {
+                        mView.showKnowledge(treeEntityList);
                     }
                 }));
     }

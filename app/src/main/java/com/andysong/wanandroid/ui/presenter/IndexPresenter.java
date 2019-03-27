@@ -28,7 +28,7 @@ public class IndexPresenter extends RxPresenter<IndexContract.View> implements I
     @Override
     public void getArticle(int page) {
         addSubscribe(mDataManager.getArticle(page)
-        .compose(RxUtil.rxSchedulerHelper())
+        .compose(RxUtil.rxSchedulerHelper(null))
         .compose(RxUtil.handleResult())
         .subscribeWith(new CommonSubscriber<PageList<ArticleEntity>>(mView, "获取失败",true) {
 

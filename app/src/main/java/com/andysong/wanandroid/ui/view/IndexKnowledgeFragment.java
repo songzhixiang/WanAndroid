@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.core.BaseMVPFragment;
@@ -16,7 +14,7 @@ import com.andysong.wanandroid.ui.presenter.KnowledgePresenter;
 import com.andysong.wanandroid.ui.view.adapter.KnowledgeTreeAdapter;
 import com.andysong.wanandroid.utils.helpers.IRefreshPage;
 import com.andysong.wanandroid.utils.helpers.RefreshHelper;
-import com.andysong.wanandroid.widget.stateview.StateView;
+import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,8 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * @author AndySong on 2019/3/20
@@ -76,13 +72,27 @@ public class IndexKnowledgeFragment extends BaseMVPFragment<KnowledgePresenter> 
     }
 
     @Override
-    public void showErrorMsg(@NotNull String msg) {
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
     }
 
     @Override
-    public void stateError() {
+    public void loadData() {
+        if (mPresenter != null) {
+            mPresenter.getKnowledge();
+        }
+    }
 
+
+    @Override
+    public void showErrorMsg(@NotNull String msg) {
+        LogUtils.e(msg);
+    }
+
+    @Override
+    public void stateError() {
+        refreshHelper.loadError();
+        refreshHelper.getAdapter().setEmptyView(R.layout.base_empty,mRecyclerView);
     }
 
     @Override
@@ -103,16 +113,5 @@ public class IndexKnowledgeFragment extends BaseMVPFragment<KnowledgePresenter> 
     @Override
     public void stateMain() {
 
-    }
-
-
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-    }
-
-    @Override
-    public void loadData() {
-        mPresenter.getKnowledge();
     }
 }

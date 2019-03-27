@@ -33,7 +33,7 @@ public class LoginPresenter extends RxPresenter<LoginContract.View> implements L
         map.put("username","18782050317");
         map.put("password","lql520ff");
         addSubscribe(mDataManager.login(map)
-                .compose(RxUtil.rxSchedulerHelper())
+                .compose(RxUtil.rxSchedulerHelper(mView))
                 .subscribe(new Consumer<ResponseBody>() {
                     @Override
                     public void accept(ResponseBody responseBody) throws Exception {

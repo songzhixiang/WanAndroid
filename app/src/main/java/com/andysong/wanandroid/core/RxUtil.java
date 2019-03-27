@@ -33,24 +33,24 @@ public class RxUtil {
     /**
      * 带参数  显示loading对话框
      *
-     * @param loadingView loading
+     * @param baseview baseview
      * @param <T>         泛型
      * @return 返回Observable
      */
-    public static <T> ObservableTransformer<T, T> switchSchedulers(final BaseView loadingView) {
+    public static <T> ObservableTransformer<T, T> switchSchedulers(final BaseView baseview) {
         return upstream -> upstream
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable -> {
-                    if (loadingView != null) {
-                        loadingView.stateLoading();
+                    if (baseview != null) {
+                        baseview.stateLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally((Action) () -> {
-                    if (loadingView != null) {
-                        loadingView.hideLoading();
+                    if (baseview != null) {
+                        baseview.stateMain();
                     }
                 });
     }
@@ -60,14 +60,22 @@ public class RxUtil {
      * @param <T>
      * @return
      */
-    public static <T> FlowableTransformer<T, T> rxSchedulerHelper() {    //compose简化线程
-        return new FlowableTransformer<T, T>() {
-            @Override
-            public Flowable<T> apply(Flowable<T> observable) {
-                return observable.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
-            }
-        };
+    public static <T> FlowableTransformer<T, T> rxSchedulerHelper(final BaseView baseView) {    //compose简化线程
+        return observable -> observable
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .doOnSubscribe(disposable -> {
+                    if (baseView != null) {
+                        baseView.stateLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally((Action) () -> {
+                    if (baseView != null) {
+                        baseView.stateMain();
+                    }
+                });
     }
 
     /**
