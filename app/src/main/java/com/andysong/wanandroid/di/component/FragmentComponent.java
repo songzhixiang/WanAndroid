@@ -5,8 +5,9 @@ import android.app.Activity;
 import com.andysong.wanandroid.di.module.FragmentModule;
 import com.andysong.wanandroid.di.scope.FragmentScope;
 import com.andysong.wanandroid.ui.view.IndexFragment;
-import com.andysong.wanandroid.ui.view.IndexKnowledgeFragment;
+import com.andysong.wanandroid.ui.view.KnowledgeFragment;
 import com.andysong.wanandroid.ui.view.LoginFragment;
+import com.andysong.wanandroid.ui.view.NavigationFragment;
 
 import dagger.Component;
 
@@ -24,7 +25,8 @@ public interface FragmentComponent {
 
     void inject(LoginFragment loginFragment);
 
-    void inject(IndexKnowledgeFragment indexKnowledgeFragment);
+    void inject(KnowledgeFragment indexKnowledgeFragment);
 
 
+    void inject(NavigationFragment navigationFragment);
 }

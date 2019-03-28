@@ -2,6 +2,7 @@ package com.andysong.wanandroid.core.http;
 
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.BannerEntity;
+import com.andysong.wanandroid.model.bean.NavigationInfoEntity;
 import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.model.bean.TreeEntity;
 import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse;
@@ -52,6 +53,11 @@ public interface MyApis {
 
     @GET("tree/json")
     Flowable<WanAndroidHttpResponse<List<TreeEntity>>> getKnowledgeTree();
+
+
+    /*=======导航======*/
+    @GET("navi/json")
+    Flowable<WanAndroidHttpResponse<List<NavigationInfoEntity>>> getNavigationInfo();
 
 
 }

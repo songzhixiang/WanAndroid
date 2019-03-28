@@ -2,6 +2,7 @@ package com.andysong.wanandroid.model;
 
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.BannerEntity;
+import com.andysong.wanandroid.model.bean.NavigationInfoEntity;
 import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.model.bean.TreeEntity;
 import com.andysong.wanandroid.model.http.HttpHelper;
@@ -49,5 +50,11 @@ public class DataManager implements HttpHelper {
     @Override
     public Flowable<WanAndroidHttpResponse<List<TreeEntity>>> getKnowledgeTree() {
         return mHttpHelper.getKnowledgeTree();
+    }
+
+    @NotNull
+    @Override
+    public Flowable<WanAndroidHttpResponse<List<NavigationInfoEntity>>> getNavigationInfo() {
+        return mHttpHelper.getNavigationInfo();
     }
 }

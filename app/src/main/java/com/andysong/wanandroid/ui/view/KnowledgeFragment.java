@@ -27,7 +27,7 @@ import butterknife.BindView;
  * @author AndySong on 2019/3/20
  * @Blog https://github.com/songzhixiang
  */
-public class IndexKnowledgeFragment extends BaseMVPFragment<KnowledgePresenter> implements IRefreshPage,KnowledgeContract.View, BaseQuickAdapter.OnItemClickListener {
+public class KnowledgeFragment extends BaseMVPFragment<KnowledgePresenter> implements IRefreshPage,KnowledgeContract.View, BaseQuickAdapter.OnItemClickListener {
 
     private RefreshHelper<TreeEntity> refreshHelper;
 
@@ -38,11 +38,11 @@ public class IndexKnowledgeFragment extends BaseMVPFragment<KnowledgePresenter> 
 
 
 
-    public static IndexKnowledgeFragment newInstance() {
+    public static KnowledgeFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        IndexKnowledgeFragment fragment = new IndexKnowledgeFragment();
+        KnowledgeFragment fragment = new KnowledgeFragment();
         fragment.setArguments(args);
         return fragment;
     }

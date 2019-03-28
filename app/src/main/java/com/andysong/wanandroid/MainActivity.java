@@ -19,10 +19,10 @@ import android.widget.TextView;
 
 import com.andysong.wanandroid.core.BaseActivity;
 import com.andysong.wanandroid.core.BaseFragment;
-import com.andysong.wanandroid.ui.view.IndexDataFragment;
+import com.andysong.wanandroid.ui.view.KnowledgeFragment;
+import com.andysong.wanandroid.ui.view.NavigationFragment;
 import com.andysong.wanandroid.ui.view.IndexFragment;
 import com.andysong.wanandroid.ui.view.IndexLastFragment;
-import com.andysong.wanandroid.ui.view.IndexKnowledgeFragment;
 import com.andysong.wanandroid.ui.view.LoginActivity;
 import com.andysong.wanandroid.utils.CommonExKt;
 import com.andysong.wanandroid.widget.AnimatedImageView;
@@ -164,8 +164,8 @@ public class MainActivity extends BaseActivity {
         BaseFragment firstFragment = findFragment(IndexFragment.class);
         if (firstFragment == null) {
             mFragments[FIRST] = IndexFragment.newInstance();
-            mFragments[SECOND] = IndexKnowledgeFragment.newInstance();
-            mFragments[THIRD] = IndexDataFragment.newInstance();
+            mFragments[SECOND] = KnowledgeFragment.newInstance();
+            mFragments[THIRD] = NavigationFragment.newInstance();
             mFragments[FOURTH] = IndexLastFragment.newInstance();
 
 
@@ -179,8 +179,8 @@ public class MainActivity extends BaseActivity {
 
             // 这里我们需要拿到mFragments的引用
             mFragments[FIRST] = firstFragment;
-            mFragments[SECOND] = findFragment(IndexKnowledgeFragment.class);
-            mFragments[THIRD] = findFragment(IndexDataFragment.class);
+            mFragments[SECOND] = findFragment(KnowledgeFragment.class);
+            mFragments[THIRD] = findFragment(NavigationFragment.class);
             mFragments[FOURTH] = findFragment(IndexLastFragment.class);
 
         }

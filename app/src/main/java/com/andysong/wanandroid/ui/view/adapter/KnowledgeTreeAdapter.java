@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.model.bean.TreeEntity;
-import com.andysong.wanandroid.ui.view.IndexKnowledgeFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -50,7 +49,7 @@ public class KnowledgeTreeAdapter extends BaseQuickAdapter<TreeEntity, BaseViewH
             child.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    IndexKnowledgeFragment.startKnowledgeTreeTabActivity(mContext, item, pos);
+//                    KnowledgeFragment.startKnowledgeTreeTabActivity(mContext, item, pos);
                 }
             });
 

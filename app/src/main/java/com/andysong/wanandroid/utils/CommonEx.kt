@@ -1,6 +1,7 @@
 package com.andysong.wanandroid.utils
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Handler
 import android.support.v4.content.ContextCompat
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.andysong.wanandroid.core.App
 import java.io.File
+import java.util.*
 
 /**
  * @author AndySong on 2019/3/20
@@ -56,4 +58,12 @@ infix fun ViewGroup.inflate(layoutResId: Int): View =
 
 fun ImageView.tint(colorId: Int) {
     setColorFilter(context.takeColor(colorId), PorterDuff.Mode.SRC_IN)
+}
+
+//val colors = arrayOf(Color.parseColor("#00BCD4"), Color.parseColor("#ea4c89"))
+val colors = arrayOf(Color.parseColor("#ea4c89"))
+
+
+fun getRandomColor(random: Random): Int {
+    return colors[random.nextInt(colors.size)]
 }
