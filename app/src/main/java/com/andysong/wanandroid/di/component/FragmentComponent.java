@@ -8,6 +8,7 @@ import com.andysong.wanandroid.ui.view.IndexFragment;
 import com.andysong.wanandroid.ui.view.KnowledgeFragment;
 import com.andysong.wanandroid.ui.view.LoginFragment;
 import com.andysong.wanandroid.ui.view.NavigationFragment;
+import com.andysong.wanandroid.ui.view.SearchFragment;
 
 import dagger.Component;
 
@@ -29,4 +30,7 @@ public interface FragmentComponent {
 
 
     void inject(NavigationFragment navigationFragment);
+
+    void inject(SearchFragment searchFragment);
+
 }

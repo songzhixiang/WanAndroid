@@ -6,4 +6,11 @@
         <attr name="retryResource" format="reference" />
         <attr name="loadingResource" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="EmojiRainLayout">
+        <attr name="per" format="integer"/>
+        <attr name="duration" format="integer"/>
+        <attr name="dropDuration" format="integer"/>
+        <attr name="dropFrequency" format="integer"/>
+    </declare-styleable>
 </resources>

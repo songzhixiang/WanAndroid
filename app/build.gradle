@@ -44,6 +44,8 @@ dependencies {
 
     implementation rootProject.ext.dependencies["recyclerview-v7"]
 
+    implementation rootProject.ext.dependencies["percent"]
+
     implementation rootProject.ext.dependencies["cardview-v7"]
 
     implementation rootProject.ext.dependencies["design"]

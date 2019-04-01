@@ -7,21 +7,10 @@ import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.core.BaseFragment;
 
 /**
- * @author AndySong on 2019/3/20
+ * @author AndySong on 2019/3/28
  * @Blog https://github.com/songzhixiang
  */
-public class IndexLastFragment extends BaseFragment {
-
-    public static IndexLastFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        IndexLastFragment fragment = new IndexLastFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
+public class JueJinFragment extends BaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.layout_recycleview;
@@ -31,4 +20,15 @@ public class IndexLastFragment extends BaseFragment {
     protected void initEventAndData(@Nullable Bundle savedInstanceState) {
 
     }
+
+    public static JueJinFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        JueJinFragment fragment = new JueJinFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
 }

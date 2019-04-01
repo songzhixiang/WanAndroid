@@ -59,5 +59,9 @@ public interface MyApis {
     @GET("navi/json")
     Flowable<WanAndroidHttpResponse<List<NavigationInfoEntity>>> getNavigationInfo();
 
+    /*=======搜索======*/
+    @POST("article/query/{page}/json")
+    Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>>  getSearchArticles(@Path("page") int page,@Body RequestBody requestBody);
+
 
 }

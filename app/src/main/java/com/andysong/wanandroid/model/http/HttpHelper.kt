@@ -3,6 +3,7 @@ package com.andysong.wanandroid.model.http
 import com.andysong.wanandroid.model.bean.*
 import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse
 import io.reactivex.Flowable
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 
 /**
@@ -20,4 +21,6 @@ interface HttpHelper{
      fun getKnowledgeTree():Flowable<WanAndroidHttpResponse<List<TreeEntity>>>
 
      fun getNavigationInfo(): Flowable<WanAndroidHttpResponse<List<NavigationInfoEntity>>>
+
+     fun getSearchArticles(page: Int,requestBody: RequestBody):Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>>
 }

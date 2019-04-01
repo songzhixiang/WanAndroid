@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Flowable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 /**
@@ -56,5 +57,11 @@ public class DataManager implements HttpHelper {
     @Override
     public Flowable<WanAndroidHttpResponse<List<NavigationInfoEntity>>> getNavigationInfo() {
         return mHttpHelper.getNavigationInfo();
+    }
+
+    @NotNull
+    @Override
+    public Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>> getSearchArticles(int page, @NotNull RequestBody requestBody) {
+        return mHttpHelper.getSearchArticles(page,requestBody);
     }
 }

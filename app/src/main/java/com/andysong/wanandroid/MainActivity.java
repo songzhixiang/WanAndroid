@@ -19,11 +19,12 @@ import android.widget.TextView;
 
 import com.andysong.wanandroid.core.BaseActivity;
 import com.andysong.wanandroid.core.BaseFragment;
-import com.andysong.wanandroid.ui.view.KnowledgeFragment;
-import com.andysong.wanandroid.ui.view.NavigationFragment;
 import com.andysong.wanandroid.ui.view.IndexFragment;
-import com.andysong.wanandroid.ui.view.IndexLastFragment;
+import com.andysong.wanandroid.ui.view.JueJinFragment;
+import com.andysong.wanandroid.ui.view.KnowledgeFragment;
 import com.andysong.wanandroid.ui.view.LoginActivity;
+import com.andysong.wanandroid.ui.view.NavigationFragment;
+import com.andysong.wanandroid.ui.view.SearchActivity;
 import com.andysong.wanandroid.utils.CommonExKt;
 import com.andysong.wanandroid.widget.AnimatedImageView;
 import com.andysong.wanandroid.widget.AnimatedTextView;
@@ -61,6 +62,9 @@ public class MainActivity extends BaseActivity {
     TextView tvFollow;
     @BindView(R.id.tv_star)
     TextView tvStar;
+    @BindView(R.id.iv_search)
+    ImageView mImageViewSearch;
+
 
     public static final int FIRST = 0;
     public static final int SECOND = 1;
@@ -92,7 +96,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.navigation_map:
+                    case R.id.navigation_index:
                         if (preSelected == -1) {
                             showHideFragment(mFragments[FIRST]);
                         } else {
@@ -101,7 +105,7 @@ public class MainActivity extends BaseActivity {
 
                         preSelected = FIRST;
                         return true;
-                    case R.id.navigation_task:
+                    case R.id.navigation_knowledge:
                         if (preSelected == -1) {
                             showHideFragment(mFragments[SECOND]);
                         } else {
@@ -109,7 +113,7 @@ public class MainActivity extends BaseActivity {
                         }
                         preSelected = SECOND;
                         return true;
-                    case R.id.navigation_data:
+                    case R.id.navigation_navi:
                         if (preSelected == -1) {
                             showHideFragment(mFragments[THIRD]);
                         } else {
@@ -117,7 +121,7 @@ public class MainActivity extends BaseActivity {
                         }
                         preSelected = THIRD;
                         return true;
-                    case R.id.navigation_setting:
+                    case R.id.navigation_juejin:
                         if (preSelected == -1) {
                             showHideFragment(mFragments[FOURTH]);
                         } else {
@@ -166,7 +170,7 @@ public class MainActivity extends BaseActivity {
             mFragments[FIRST] = IndexFragment.newInstance();
             mFragments[SECOND] = KnowledgeFragment.newInstance();
             mFragments[THIRD] = NavigationFragment.newInstance();
-            mFragments[FOURTH] = IndexLastFragment.newInstance();
+            mFragments[FOURTH] = JueJinFragment.newInstance();
 
 
             loadMultipleRootFragment(R.id.fl_container, FIRST,
@@ -181,7 +185,7 @@ public class MainActivity extends BaseActivity {
             mFragments[FIRST] = firstFragment;
             mFragments[SECOND] = findFragment(KnowledgeFragment.class);
             mFragments[THIRD] = findFragment(NavigationFragment.class);
-            mFragments[FOURTH] = findFragment(IndexLastFragment.class);
+            mFragments[FOURTH] = findFragment(JueJinFragment.class);
 
         }
     }
@@ -222,7 +226,13 @@ public class MainActivity extends BaseActivity {
 
 
 
-    @OnClick({R.id.userAvatar, R.id.tv_favorite, R.id.tv_recent, R.id.tv_follow, R.id.tv_star,R.id.arcView})
+    @OnClick({R.id.userAvatar,
+            R.id.tv_favorite,
+            R.id.tv_recent,
+            R.id.tv_follow,
+            R.id.tv_star,
+            R.id.iv_search,
+            R.id.arcView})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.userAvatar:
@@ -243,6 +253,10 @@ public class MainActivity extends BaseActivity {
                 } else {
                     mDrawerLayout.openDrawer(GravityCompat.START);
                 }
+                break;
+
+            case R.id.iv_search:
+                SearchActivity.start(MainActivity.this);
                 break;
         }
     }

@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 /**
@@ -62,5 +63,11 @@ public class RetrofitHelper implements HttpHelper {
     @Override
     public Flowable<WanAndroidHttpResponse<List<NavigationInfoEntity>>> getNavigationInfo() {
         return mMyApiService.getNavigationInfo();
+    }
+
+    @NotNull
+    @Override
+    public Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>> getSearchArticles(int page, @NotNull RequestBody requestBody) {
+        return mMyApiService.getSearchArticles(page,requestBody);
     }
 }

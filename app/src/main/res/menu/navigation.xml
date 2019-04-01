@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_map"
+        android:id="@+id/navigation_index"
         android:icon="@drawable/ic_index"
         android:title="主页" />
 
     <item
-        android:id="@+id/navigation_task"
-        android:icon="@drawable/ic_index"
-        android:title="主页" />
+        android:id="@+id/navigation_knowledge"
+        android:icon="@drawable/ic_knowledge"
+        android:title="体系" />
 
     <item
-        android:id="@+id/navigation_data"
-        android:icon="@drawable/ic_index"
-        android:title="主页" />
+        android:id="@+id/navigation_navi"
+        android:icon="@drawable/ic_navi"
+        android:title="分类" />
+
     <item
-        android:id="@+id/navigation_setting"
-        android:icon="@drawable/ic_index"
-        android:title="主页" />
-  
+        android:id="@+id/navigation_juejin"
+        android:icon="@drawable/ic_juejin"
+        android:title="掘金" />
 </menu>
