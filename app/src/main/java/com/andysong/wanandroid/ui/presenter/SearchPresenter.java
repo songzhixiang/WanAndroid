@@ -9,6 +9,8 @@ import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.ui.contract.SearchContract;
 import com.blankj.utilcode.util.LogUtils;
 
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,7 +38,7 @@ public class SearchPresenter extends RxPresenter<SearchContract.View> implements
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("k",searchText)
                 .build();
-
+        mDataManager.insertHistory(searchText);
         addSubscribe(mDataManager.getSearchArticles(page,requestBody)
                 .compose(RxUtil.rxSchedulerHelper(null))
                 .compose(RxUtil.handleResult())
@@ -51,7 +53,7 @@ public class SearchPresenter extends RxPresenter<SearchContract.View> implements
 
     @Override
     public void queryHistory() {
-
+        mView.showSearchHistroy(mDataManager.queryAllHistory());
     }
 
     @Override

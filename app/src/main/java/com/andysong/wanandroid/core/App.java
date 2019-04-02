@@ -1,5 +1,6 @@
 package com.andysong.wanandroid.core;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
@@ -11,6 +12,8 @@ import com.andysong.wanandroid.di.component.DaggerAppComponent;
 import com.andysong.wanandroid.di.module.AppModule;
 import com.andysong.wanandroid.di.module.HttpModule;
 import com.blankj.utilcode.util.Utils;
+
+import io.realm.Realm;
 
 /**
  * @author AndySong on 2019/3/20
@@ -31,21 +34,26 @@ public class App extends Application {
         super.onCreate();
         instance = this;
         Utils.init(this);
+        Realm.init(this);
         registerActivityLifecycleCallbacks(new AppManagerCall());
         registerComponentCallbacks(new ComponentCallbacks2() {
             @Override
             public void onTrimMemory(int i) {
+                App.super.onTrimMemory(i);
+                if (i >= ComponentCallbacks2.TRIM_MEMORY_MODERATE){
 
+                }
             }
 
             @Override
             public void onConfigurationChanged(Configuration configuration) {
-
+                //android:configChanges="keyboardHidden|orientation|screenSize"
+                // 设置该配置属性会使 Activity在配置改变时不重启，只执行onConfigurationChanged（）
             }
 
             @Override
             public void onLowMemory() {
-
+                //若想兼容Android 4.0 则使用，否知直接使用OnTrimMemory（）
             }
         });
     }

@@ -34,4 +34,15 @@
     <style name="ThemeSplash" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
+
+
+    <style name="WallpaperTheme" parent="Theme.AppCompat">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

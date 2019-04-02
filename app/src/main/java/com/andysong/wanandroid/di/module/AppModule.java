@@ -2,6 +2,8 @@ package com.andysong.wanandroid.di.module;
 
 import com.andysong.wanandroid.core.App;
 import com.andysong.wanandroid.model.DataManager;
+import com.andysong.wanandroid.model.db.DBHelper;
+import com.andysong.wanandroid.model.db.RealmHelper;
 import com.andysong.wanandroid.model.http.HttpHelper;
 import com.andysong.wanandroid.model.http.RetrofitHelper;
 
@@ -37,7 +39,13 @@ public class AppModule {
 
     @Provides
     @Singleton
-    DataManager provideDataManager(HttpHelper httpHelper) {
-        return new DataManager(httpHelper);
+    DataManager provideDataManager(HttpHelper httpHelper,RealmHelper realmHelper) {
+        return new DataManager(httpHelper,realmHelper);
+    }
+
+    @Provides
+    @Singleton
+    DBHelper provideDBHelper(RealmHelper realmHelper){
+        return realmHelper;
     }
 }

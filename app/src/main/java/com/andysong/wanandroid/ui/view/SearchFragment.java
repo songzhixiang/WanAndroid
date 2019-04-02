@@ -13,14 +13,17 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.core.BaseMVPFragment;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
+import com.andysong.wanandroid.model.bean.History;
 import com.andysong.wanandroid.ui.contract.SearchContract;
 import com.andysong.wanandroid.ui.presenter.SearchPresenter;
 import com.andysong.wanandroid.widget.EmojiRainLayout;
+import com.blankj.utilcode.util.LogUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -37,7 +40,7 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
     @BindView(R.id.ed_search)
     AppCompatEditText mEdSearch;
     @BindView(R.id.iv_edit_clear)
-    AppCompatImageView ivEditClear;
+    AppCompatImageView mIvEditClear;
     @BindView(R.id.iv_search)
     AppCompatImageView ivSearch;
     @BindView(R.id.toolbar_search)
@@ -52,7 +55,7 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
     @BindView(R.id.swiperefresh)
-    SwipeRefreshLayout swiperefresh;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.emoji_rainLayout)
     EmojiRainLayout mEmojiRainLayout;
 
@@ -85,10 +88,10 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_edit_clear:
-
+                mPresenter.queryHistory();
                 break;
             case R.id.tv_search_clean:
-                mPresenter.search("Android",1);
+                mPresenter.search(mEdSearch.getText().toString().trim(),1);
                 break;
         }
     }
@@ -105,11 +108,20 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
 
     @Override
     public void afterTextChanged(Editable editable) {
+        if (editable.length()>0){
+            showEditClear();
+        }else {
+            hideEditClear();
+            hideSwipLoading();
 
+        }
     }
 
     @Override
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        if (i == EditorInfo.IME_ACTION_SEARCH) {
+            mPresenter.search(textView.getText().toString().trim(),0);
+        }
         return false;
     }
 
@@ -133,18 +145,30 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
     }
 
     @Override
-    public void showSearchHistroy() {
+    public void showSearchHistroy(List<History> historyList) {
+        LogUtils.e(historyList.size());
+    }
 
+
+
+    @Override
+    public void showSwipLoading() {
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideSwipLoading() {
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showEditClear() {
-
+        mIvEditClear.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideEditClear() {
-
+        mIvEditClear.setVisibility(View.GONE);
     }
 
     @Override

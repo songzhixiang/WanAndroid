@@ -3,6 +3,7 @@ package com.andysong.wanandroid.ui.contract;
 import com.andysong.wanandroid.core.BasePresenter;
 import com.andysong.wanandroid.core.BaseView;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
+import com.andysong.wanandroid.model.bean.History;
 
 import java.util.List;
 
@@ -16,7 +17,12 @@ public interface SearchContract {
 
         void showSearchResult(List<ArticleEntity> articleEntityList);
 
-        void showSearchHistroy();
+        void showSearchHistroy(List<History> historyList);
+
+
+        void showSwipLoading();
+
+        void hideSwipLoading();
 
         void showEditClear();
 
