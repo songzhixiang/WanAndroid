@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
 import android.view.KeyEvent;
@@ -23,10 +24,15 @@ import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.core.BaseMVPFragment;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.History;
+import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.ui.contract.SearchContract;
 import com.andysong.wanandroid.ui.presenter.SearchPresenter;
+import com.andysong.wanandroid.ui.view.adapter.IndexAdapter;
+import com.andysong.wanandroid.utils.helpers.IRefreshPage;
+import com.andysong.wanandroid.utils.helpers.RefreshLoadMoreHelper;
 import com.andysong.wanandroid.widget.EmojiRainLayout;
 import com.blankj.utilcode.util.LogUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,7 +45,7 @@ import butterknife.OnClick;
  * @author AndySong on 2019/4/1
  * @Blog https://github.com/songzhixiang
  */
-public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements TextWatcher, TextView.OnEditorActionListener, SearchContract.View {
+public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements IRefreshPage,TextWatcher, TextView.OnEditorActionListener, SearchContract.View, BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.ed_search)
     AppCompatEditText mEdSearch;
     @BindView(R.id.iv_edit_clear)
@@ -62,6 +68,7 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
     @BindView(R.id.emoji_rainLayout)
     EmojiRainLayout mEmojiRainLayout;
 
+    private RefreshLoadMoreHelper<ArticleEntity> refreshLoadMoreHelper;
 
     @Override
     protected int getLayoutId() {
@@ -87,6 +94,11 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
 
         //
         mPresenter.queryHistory();
+
+        //
+        refreshLoadMoreHelper = new RefreshLoadMoreHelper<>(this, mSwipeRefreshLayout, mRecyclerView, IndexAdapter.class);
+        refreshLoadMoreHelper.autoRefresh();
+        refreshLoadMoreHelper.setOnItemClickListener(this);
     }
 
 
@@ -148,10 +160,16 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
     }
 
     @Override
-    public void showSearchResult(List<ArticleEntity> articleEntityList) {
-        LogUtils.e(articleEntityList.isEmpty());
+    public void showSearchResult(PageList<ArticleEntity> articleEntityList) {
         llSearchHistory.setVisibility(View.GONE);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+        if (!articleEntityList.getData().isEmpty())
+        {
+            refreshLoadMoreHelper.loadSuccess(articleEntityList);
+        }else {
+            refreshLoadMoreHelper.loadError();
+        }
+
     }
 
     @Override
@@ -242,5 +260,17 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
     @Override
     public void stateMain() {
 
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+    }
+
+    @Override
+    public void loadData() {
+        if (mPresenter != null && !TextUtils.isEmpty(mEdSearch.getText().toString().trim())) {
+            mPresenter.search(mEdSearch.getText().toString().trim(),refreshLoadMoreHelper.getCurrPage());
+        }
     }
 }

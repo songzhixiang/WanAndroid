@@ -38,14 +38,16 @@ public class SearchPresenter extends RxPresenter<SearchContract.View> implements
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("k",searchText)
                 .build();
-        mDataManager.insertHistory(searchText);
+        if (page == 0){
+            mDataManager.insertHistory(searchText);
+        }
         addSubscribe(mDataManager.getSearchArticles(page,requestBody)
                 .compose(RxUtil.rxSchedulerHelper(null))
                 .compose(RxUtil.handleResult())
                 .subscribe(new Consumer<PageList<ArticleEntity>>() {
                     @Override
                     public void accept(PageList<ArticleEntity> articleEntityPageList) throws Exception {
-                        mView.showSearchResult(articleEntityPageList.getData());
+                        mView.showSearchResult(articleEntityPageList);
                     }
                 }));
     }

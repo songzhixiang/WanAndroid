@@ -4,6 +4,7 @@ import com.andysong.wanandroid.core.BasePresenter;
 import com.andysong.wanandroid.core.BaseView;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.History;
+import com.andysong.wanandroid.model.bean.PageList;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface SearchContract {
 
     interface View extends BaseView{
 
-        void showSearchResult(List<ArticleEntity> articleEntityList);
+        void showSearchResult(PageList<ArticleEntity> articleEntityList);
 
         void showSearchHistroy(List<History> historyList);
 
