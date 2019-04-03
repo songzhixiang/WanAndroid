@@ -35,7 +35,9 @@ public abstract class BaseMVPFragment<P extends BasePresenter> extends BaseFragm
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         initInject();
-        mPresenter.attachView(this);
+        if (mPresenter != null) {
+            mPresenter.attachView(this);
+        }
         super.onViewCreated(view, savedInstanceState);
     }
 

@@ -39,10 +39,8 @@ public class App extends Application {
         registerComponentCallbacks(new ComponentCallbacks2() {
             @Override
             public void onTrimMemory(int i) {
-                App.super.onTrimMemory(i);
-                if (i >= ComponentCallbacks2.TRIM_MEMORY_MODERATE){
 
-                }
+
             }
 
             @Override

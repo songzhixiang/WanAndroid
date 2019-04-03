@@ -45,8 +45,7 @@ public class SearchPresenter extends RxPresenter<SearchContract.View> implements
                 .subscribe(new Consumer<PageList<ArticleEntity>>() {
                     @Override
                     public void accept(PageList<ArticleEntity> articleEntityPageList) throws Exception {
-                        LogUtils.e(articleEntityPageList.getCurPage());
-                        LogUtils.e(articleEntityPageList.getData().size());
+                        mView.showSearchResult(articleEntityPageList.getData());
                     }
                 }));
     }
@@ -58,6 +57,8 @@ public class SearchPresenter extends RxPresenter<SearchContract.View> implements
 
     @Override
     public void deleteAllHistory() {
-
+        if (mDataManager.deleteAllHistory()){
+            queryHistory();
+        }
     }
 }

@@ -86,6 +86,7 @@ public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements IR
 
     @Override
     public void showErrorMsg(@NotNull String msg) {
+        refreshLoadMoreHelper.loadError();
         LogUtils.e(msg);
     }
 
