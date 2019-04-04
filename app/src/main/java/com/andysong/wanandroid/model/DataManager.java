@@ -3,6 +3,7 @@ package com.andysong.wanandroid.model;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.BannerEntity;
 import com.andysong.wanandroid.model.bean.History;
+import com.andysong.wanandroid.model.bean.LoginResultEntity;
 import com.andysong.wanandroid.model.bean.NavigationInfoEntity;
 import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.model.bean.TreeEntity;
@@ -48,7 +49,7 @@ public class DataManager implements HttpHelper, DBHelper {
 
     @NotNull
     @Override
-    public Flowable<ResponseBody> login(@NotNull Map<String, String> map) {
+    public Flowable<WanAndroidHttpResponse<LoginResultEntity>> login(@NotNull Map<String, String> map) {
         return mHttpHelper.login(map);
     }
 

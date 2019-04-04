@@ -3,7 +3,10 @@ package com.andysong.wanandroid.ui.presenter;
 import com.andysong.wanandroid.core.RxPresenter;
 import com.andysong.wanandroid.core.RxUtil;
 import com.andysong.wanandroid.model.DataManager;
+import com.andysong.wanandroid.model.bean.LoginResultEntity;
+import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse;
 import com.andysong.wanandroid.ui.contract.LoginContract;
+import com.blankj.utilcode.util.LogUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,10 +37,10 @@ public class LoginPresenter extends RxPresenter<LoginContract.View> implements L
         map.put("password","lql520ff");
         addSubscribe(mDataManager.login(map)
                 .compose(RxUtil.rxSchedulerHelper(mView))
-                .subscribe(new Consumer<ResponseBody>() {
+                .subscribe(new Consumer<WanAndroidHttpResponse<LoginResultEntity>>() {
                     @Override
-                    public void accept(ResponseBody responseBody) throws Exception {
-
+                    public void accept(WanAndroidHttpResponse<LoginResultEntity> loginResultEntityWanAndroidHttpResponse) throws Exception {
+                        LogUtils.e(loginResultEntityWanAndroidHttpResponse.getData());
                     }
                 }));
     }

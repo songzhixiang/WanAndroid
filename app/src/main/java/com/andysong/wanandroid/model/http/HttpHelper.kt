@@ -16,7 +16,7 @@ interface HttpHelper{
 
      fun getArticle(page:Int): Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>>
 
-     fun login(map:Map<String,String>): Flowable<ResponseBody>
+     fun login(map:Map<String,String>): Flowable<WanAndroidHttpResponse<LoginResultEntity>>
 
      fun getKnowledgeTree():Flowable<WanAndroidHttpResponse<List<TreeEntity>>>
 

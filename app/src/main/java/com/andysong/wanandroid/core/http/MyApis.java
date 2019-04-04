@@ -2,6 +2,7 @@ package com.andysong.wanandroid.core.http;
 
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.BannerEntity;
+import com.andysong.wanandroid.model.bean.LoginResultEntity;
 import com.andysong.wanandroid.model.bean.NavigationInfoEntity;
 import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.model.bean.TreeEntity;
@@ -42,7 +43,7 @@ public interface MyApis {
     //登陆
     @FormUrlEncoded
     @POST("user/login")
-    Flowable<ResponseBody> login(@FieldMap Map<String, String> params);
+    Flowable<WanAndroidHttpResponse<LoginResultEntity>> login(@FieldMap Map<String, String> params);
 
     //登陆
     @POST("user/login")

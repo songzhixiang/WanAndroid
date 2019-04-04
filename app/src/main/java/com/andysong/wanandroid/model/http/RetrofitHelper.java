@@ -4,6 +4,7 @@ import com.andysong.wanandroid.core.http.GoldApis;
 import com.andysong.wanandroid.core.http.MyApis;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.BannerEntity;
+import com.andysong.wanandroid.model.bean.LoginResultEntity;
 import com.andysong.wanandroid.model.bean.NavigationInfoEntity;
 import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.model.bean.TreeEntity;
@@ -49,7 +50,7 @@ public class RetrofitHelper implements HttpHelper {
 
     @NotNull
     @Override
-    public Flowable<ResponseBody> login(@NotNull Map<String, String> map) {
+    public Flowable<WanAndroidHttpResponse<LoginResultEntity>> login(@NotNull Map<String, String> map) {
         return mMyApiService.login(map);
     }
 
