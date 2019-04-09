@@ -102,7 +102,7 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
     }
 
 
-    @OnClick({R.id.iv_edit_clear, R.id.tv_search_clean})
+    @OnClick({R.id.iv_edit_clear, R.id.tv_search_clean,R.id.iv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_edit_clear:
@@ -112,6 +112,14 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
                 break;
             case R.id.tv_search_clean:
                 mPresenter.deleteAllHistory();
+                break;
+
+            case R.id.iv_search:
+                if (mPresenter != null && !TextUtils.isEmpty(mEdSearch.getText().toString().trim())) {
+                    mPresenter.search(mEdSearch.getText().toString().trim(),0);
+                }else{
+                    mEmojiRainLayout.startDropping();
+                }
                 break;
         }
     }
@@ -273,4 +281,6 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
             mPresenter.search(mEdSearch.getText().toString().trim(),refreshLoadMoreHelper.getCurrPage());
         }
     }
+
+
 }

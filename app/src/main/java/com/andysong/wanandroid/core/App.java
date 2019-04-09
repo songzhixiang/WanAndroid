@@ -1,6 +1,5 @@
 package com.andysong.wanandroid.core;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
