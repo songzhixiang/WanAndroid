@@ -80,6 +80,11 @@ public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements IR
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        if (adapter.getItem(position) instanceof ArticleEntity)
+        {
+            LogUtils.e(((ArticleEntity) adapter.getItem(position)).getLink());
+            start(ArticleDetailsFragment.newInstance(((ArticleEntity) adapter.getItem(position)).getLink()));
+        }
 
     }
 

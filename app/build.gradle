@@ -89,7 +89,7 @@ dependencies {
 
     implementation 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
 
-    implementation 'com.tencent.sonic:sdk:3.1.0'
+    implementation 'com.just.agentweb:agentweb:4.0.3-alpha@aar'
 
     testImplementation 'junit:junit:4.12'
 
