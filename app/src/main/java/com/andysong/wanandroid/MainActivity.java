@@ -4,15 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.FrameLayout;
 
 import com.andysong.wanandroid.core.BaseActivity;
 import com.andysong.wanandroid.ui.view.MainFragment;
+import com.andysong.wanandroid.utils.StatusBarUtil;
 
+import butterknife.BindView;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public class MainActivity extends BaseActivity {
 
+    @BindView(R.id.fl_container)
+    FrameLayout flContainer;
 
     @Override
     protected int initView(@Nullable Bundle savedInstanceState) {
@@ -25,7 +30,7 @@ public class MainActivity extends BaseActivity {
         if (findFragment(MainFragment.class) == null) {
             loadRootFragment(R.id.fl_container, MainFragment.newInstance());
         }
-
+        StatusBarUtil.setTransparentForImageViewInFragment(MainActivity.this, null);
 
     }
 

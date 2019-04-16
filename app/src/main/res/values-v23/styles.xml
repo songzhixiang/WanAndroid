@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorWhite</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/product_family</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+
         <!-- Android 6.0以上 状态栏字色和图标为浅黑色-->
         <item name="android:windowLightStatusBar">true</item>
     </style>
