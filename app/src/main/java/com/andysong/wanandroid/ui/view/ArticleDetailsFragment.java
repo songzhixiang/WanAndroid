@@ -2,6 +2,9 @@ package com.andysong.wanandroid.ui.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -21,6 +24,8 @@ public class ArticleDetailsFragment extends BaseFragment {
 
     @BindView(R.id.fl_container)
     FrameLayout mContanier;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     private AgentWeb mAgentWeb;
 
@@ -31,6 +36,13 @@ public class ArticleDetailsFragment extends BaseFragment {
 
     @Override
     protected void initEventAndData(@Nullable Bundle savedInstanceState) {
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _mActivity.onBackPressed();
+            }
+        });
+
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(mContanier,new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator(getResources().getColor(R.color.colorPrimary), 2)//设置进度条颜色与高度，-1为默认值，高度为2，单位为dp。

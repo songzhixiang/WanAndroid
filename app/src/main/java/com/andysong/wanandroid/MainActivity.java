@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity {
         if (findFragment(MainFragment.class) == null) {
             loadRootFragment(R.id.fl_container, MainFragment.newInstance());
         }
-        StatusBarUtil.setTransparentForImageViewInFragment(MainActivity.this, null);
+
 
     }
 

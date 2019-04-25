@@ -17,6 +17,7 @@ import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
@@ -84,11 +85,8 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
         mEmojiRainLayout.addEmoji(R.drawable.emoji_4_3);
         mEmojiRainLayout.addEmoji(R.drawable.emoji_5_3);
 
-        //
-        setHasOptionsMenu(true);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbarSearch);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbarSearch.setNavigationOnClickListener(v->onBackPressedSupport());
+
+        mToolbarSearch.setNavigationOnClickListener(v->_mActivity.onBackPressed());
         mEdSearch.addTextChangedListener(this);
         mEdSearch.setOnEditorActionListener(this);
 
@@ -282,5 +280,14 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
         }
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mRecyclerView = null;
+        mFlowLayout = null;
+        _mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        hideSoftInput();
+    }
 
 }

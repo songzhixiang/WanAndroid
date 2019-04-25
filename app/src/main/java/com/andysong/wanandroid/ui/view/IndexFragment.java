@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.andysong.wanandroid.R;
@@ -83,7 +84,13 @@ public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements IR
         if (adapter.getItem(position) instanceof ArticleEntity)
         {
 
-            ((MainFragment)getParentFragment()).startBrotherFragment((ArticleDetailsFragment.newInstance(((ArticleEntity) adapter.getItem(position)).getLink())));
+            ((MainFragment)getParentFragment())
+                    .startBrotherFragment((ArticleDetailsFragment
+                            .newInstance(TextUtils
+                                    .isEmpty(((ArticleEntity) adapter
+                                            .getItem(position)).getProjectLink())?((ArticleEntity) adapter
+                                    .getItem(position)).getLink():((ArticleEntity) adapter
+                                    .getItem(position)).getProjectLink())));
         }
 
     }

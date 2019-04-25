@@ -11,6 +11,7 @@ import com.andysong.wanandroid.di.component.DaggerAppComponent;
 import com.andysong.wanandroid.di.module.AppModule;
 import com.andysong.wanandroid.di.module.HttpModule;
 import com.blankj.utilcode.util.Utils;
+import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
 
@@ -31,6 +32,10 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)){
+            return;
+        }
+        LeakCanary.install(this);
         instance = this;
         Utils.init(this);
         Realm.init(this);

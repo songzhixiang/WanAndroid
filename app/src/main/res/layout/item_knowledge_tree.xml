@@ -11,7 +11,7 @@
         android:id="@+id/tv_knowledge_type"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawableRight="@drawable/ic_arrow_right"
+        android:drawableRight="@drawable/ic_chevron_right"
         android:gravity="center_vertical"
         android:text="知识体系"
         android:padding="8dp"

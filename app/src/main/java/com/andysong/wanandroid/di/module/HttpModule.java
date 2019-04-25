@@ -74,13 +74,13 @@ public class HttpModule {
         Interceptor cacheInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
+                Request request = chain.request();//请求时候
                 if (!NetworkUtils.isConnected()) {
                     request = request.newBuilder()
                             .cacheControl(CacheControl.FORCE_CACHE)
                             .build();
                 }
-                Response response = chain.proceed(request);
+                Response response = chain.proceed(request);//响应
                 if (NetworkUtils.isConnected()) {
                     int maxAge = 0;
                     // 有网络时, 不缓存, 最大保存时长为0
