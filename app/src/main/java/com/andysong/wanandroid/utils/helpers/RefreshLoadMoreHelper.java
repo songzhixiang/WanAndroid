@@ -50,7 +50,7 @@ public class RefreshLoadMoreHelper<T> implements SwipeRefreshLayout.OnRefreshLis
             }
             recyclerView.setAdapter(this.adapter);
             adapter.setOnLoadMoreListener(this, recyclerView);
-            adapter.setEmptyView(R.layout.base_empty);
+//            adapter.setEmptyView(R.layout.base_empty);
         } catch (Exception e) {
             throw new RuntimeException("Adapter's constructor must be Adapter(layoutId,List) or Adapter(List)");
         }

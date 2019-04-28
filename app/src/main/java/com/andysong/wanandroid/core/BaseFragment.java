@@ -29,7 +29,7 @@ public abstract class BaseFragment extends Fragment implements ISupportFragment 
 
     private Unbinder mUnBinder;
     protected View mView;
-    protected boolean isInited = false;
+    protected boolean isInited = false;//用于去判断是否加载了
 
     final SupportFragmentDelegate mDelegate = new SupportFragmentDelegate(this);
     protected FragmentActivity _mActivity;
