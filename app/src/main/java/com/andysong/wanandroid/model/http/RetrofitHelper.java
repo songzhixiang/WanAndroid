@@ -71,4 +71,10 @@ public class RetrofitHelper implements HttpHelper {
     public Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>> getSearchArticles(int page, @NotNull RequestBody requestBody) {
         return mMyApiService.getSearchArticles(page,requestBody);
     }
+
+    @NotNull
+    @Override
+    public Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>> getKnowledgeTreeArtcile(int page,int cid) {
+        return mMyApiService.getKnowledgeTreeArticles(page, cid);
+    }
 }

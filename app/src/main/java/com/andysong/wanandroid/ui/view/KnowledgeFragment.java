@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.andysong.wanandroid.R;
+import com.andysong.wanandroid.core.BaseFragment;
 import com.andysong.wanandroid.core.BaseMVPFragment;
 import com.andysong.wanandroid.model.bean.TreeEntity;
 import com.andysong.wanandroid.ui.contract.KnowledgeContract;
@@ -22,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import butterknife.BindView;
+import me.yokeyword.fragmentation.ISupportFragment;
 
 /**
  * @author AndySong on 2019/3/20
@@ -57,6 +59,7 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowledgePresenter> imple
     protected void initEventAndData(@Nullable Bundle savedInstanceState) {
 
         refreshHelper = new RefreshHelper<>(this, mSwipeRefreshLayout, mRecyclerView, KnowledgeTreeAdapter.class);
+        ((KnowledgeTreeAdapter)refreshHelper.getAdapter()).setBaseFragment(this);
         refreshHelper.autoRefresh();
         refreshHelper.setOnItemClickListener(this);
     }
@@ -73,7 +76,8 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowledgePresenter> imple
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+        ((BaseFragment)getParentFragment())
+                .start(TypeTabFragment.newInstance(refreshHelper.getItem(position), 0));
     }
 
     @Override

@@ -20,6 +20,9 @@ interface HttpHelper{
 
      fun getKnowledgeTree():Flowable<WanAndroidHttpResponse<List<TreeEntity>>>
 
+
+     fun getKnowledgeTreeArtcile(page: Int,cid : Int):Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>>
+
      fun getNavigationInfo(): Flowable<WanAndroidHttpResponse<List<NavigationInfoEntity>>>
 
      fun getSearchArticles(page: Int,requestBody: RequestBody):Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>>

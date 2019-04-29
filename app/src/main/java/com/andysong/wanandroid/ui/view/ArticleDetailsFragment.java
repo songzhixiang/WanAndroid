@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.core.BaseFragment;
@@ -24,6 +25,8 @@ public class ArticleDetailsFragment extends BaseFragment {
 
     @BindView(R.id.fl_container)
     FrameLayout mContanier;
+    @BindView(R.id.tv_toolbar)
+    TextView mTextView;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -36,6 +39,9 @@ public class ArticleDetailsFragment extends BaseFragment {
 
     @Override
     protected void initEventAndData(@Nullable Bundle savedInstanceState) {
+
+        mTextView.setText(getArguments().getString("name"));
+
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,10 +66,11 @@ public class ArticleDetailsFragment extends BaseFragment {
     }
 
 
-    public static ArticleDetailsFragment newInstance(String url) {
+    public static ArticleDetailsFragment newInstance(String url,String name) {
 
         Bundle args = new Bundle();
         args.putString("url",url);
+        args.putString("name",name);
         ArticleDetailsFragment fragment = new ArticleDetailsFragment();
         fragment.setArguments(args);
         return fragment;

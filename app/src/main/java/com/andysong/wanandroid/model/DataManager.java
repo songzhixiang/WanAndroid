@@ -102,4 +102,10 @@ public class DataManager implements HttpHelper, DBHelper {
     public List<History> queryAllHistory() {
         return mDbHelper.queryAllHistory();
     }
+
+    @NotNull
+    @Override
+    public Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>> getKnowledgeTreeArtcile(int page, int cid) {
+        return mHttpHelper.getKnowledgeTreeArtcile(page,cid);
+    }
 }

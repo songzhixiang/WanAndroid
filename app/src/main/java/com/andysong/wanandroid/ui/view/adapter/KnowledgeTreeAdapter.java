@@ -8,17 +8,34 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.andysong.wanandroid.R;
+import com.andysong.wanandroid.core.BaseFragment;
 import com.andysong.wanandroid.model.bean.TreeEntity;
+import com.andysong.wanandroid.ui.view.KnowledgeFragment;
+import com.andysong.wanandroid.ui.view.TypeTabFragment;
+import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
+
+import io.realm.annotations.Index;
 
 /**
  * @author AndySong on 2019/3/25
  * @Blog https://github.com/songzhixiang
  */
 public class KnowledgeTreeAdapter extends BaseQuickAdapter<TreeEntity, BaseViewHolder> {
+
+    private BaseFragment mBaseFragment;
+
+
+    public BaseFragment getBaseFragment() {
+        return mBaseFragment;
+    }
+
+    public void setBaseFragment(BaseFragment baseFragment) {
+        mBaseFragment = baseFragment;
+    }
 
     public KnowledgeTreeAdapter(@Nullable List<TreeEntity> data) {
         super(R.layout.item_knowledge_tree, data);
@@ -49,7 +66,9 @@ public class KnowledgeTreeAdapter extends BaseQuickAdapter<TreeEntity, BaseViewH
             child.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    KnowledgeFragment.startKnowledgeTreeTabActivity(mContext, item, pos);
+                    ((BaseFragment)getBaseFragment().getParentFragment())
+                            .start(TypeTabFragment.newInstance(item,pos));
+
                 }
             });
 

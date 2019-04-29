@@ -21,6 +21,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * @author AndySong on 2019/3/20
@@ -54,6 +55,9 @@ public interface MyApis {
 
     @GET("tree/json")
     Flowable<WanAndroidHttpResponse<List<TreeEntity>>> getKnowledgeTree();
+
+    @GET("article/list/{page}/json")
+    Flowable<WanAndroidHttpResponse<PageList<ArticleEntity>>> getKnowledgeTreeArticles(@Path("page") int page, @Query("cid") int cid);
 
 
     /*=======导航======*/

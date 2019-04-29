@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.andysong.wanandroid.R;
+import com.andysong.wanandroid.core.BaseFragment;
 import com.andysong.wanandroid.core.BaseMVPFragment;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.PageList;
@@ -47,6 +48,16 @@ public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements IR
     }
 
 
+    public static IndexFragment newInstance(int cid) {
+
+        Bundle args = new Bundle();
+        args.putInt("cid",cid);
+        IndexFragment fragment = new IndexFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.layout_recycleview;
@@ -75,7 +86,12 @@ public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements IR
     @Override
     public void loadData() {
         if (mPresenter != null) {
-            mPresenter.getArticle(refreshLoadMoreHelper.getCurrPage());
+            if (null!=getArguments() && getArguments().getInt("cid")!=0){
+                mPresenter.getKnowledge(refreshLoadMoreHelper.getCurrPage(),getArguments().getInt("cid"));
+            }else {
+                mPresenter.getArticle(refreshLoadMoreHelper.getCurrPage());
+            }
+
         }
     }
 
@@ -84,13 +100,13 @@ public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements IR
         if (adapter.getItem(position) instanceof ArticleEntity)
         {
 
-            ((MainFragment)getParentFragment())
-                    .startBrotherFragment((ArticleDetailsFragment
+            ((BaseFragment)getParentFragment())
+                    .start((ArticleDetailsFragment
                             .newInstance(TextUtils
-                                    .isEmpty(((ArticleEntity) adapter
-                                            .getItem(position)).getProjectLink())?((ArticleEntity) adapter
-                                    .getItem(position)).getLink():((ArticleEntity) adapter
-                                    .getItem(position)).getProjectLink())));
+                                    .isEmpty(refreshLoadMoreHelper.getItem(position).getProjectLink())?
+                                            refreshLoadMoreHelper.getItem(position).getLink():
+                                            refreshLoadMoreHelper.getItem(position).getProjectLink()
+                                    ,refreshLoadMoreHelper.getItem(position).getTitle())));
         }
 
     }
@@ -124,6 +140,16 @@ public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements IR
 
     @Override
     public void stateMain() {
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (null!=refreshLoadMoreHelper){
+            refreshLoadMoreHelper.onDestroy();
+            refreshLoadMoreHelper = null;
+        }
 
     }
 }

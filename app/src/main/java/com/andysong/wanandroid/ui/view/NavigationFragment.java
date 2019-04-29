@@ -65,6 +65,7 @@ public class NavigationFragment extends BaseMVPFragment<NavigationPresenter> imp
     protected void initEventAndData(@Nullable Bundle savedInstanceState) {
         mRecyclerViewNavigation.setLayoutManager(new LinearLayoutManager(getActivity()));
         mNavigationAdapter = new NavigationAdapter(items);
+        mNavigationAdapter.setBaseFragment(this);
         mRecyclerViewNavigation.setAdapter(mNavigationAdapter);
         mRecyclerViewNavigation.addOnScrollListener(onScrollListener);
 

@@ -38,4 +38,17 @@ public class IndexPresenter extends RxPresenter<IndexContract.View> implements I
             }
         }));
     }
+
+    @Override
+    public void getKnowledge(int page, int cid) {
+        addSubscribe(mDataManager.getKnowledgeTreeArtcile(page, cid)
+        .compose(RxUtil.rxSchedulerHelper(null))
+        .compose(RxUtil.handleResult())
+        .subscribeWith(new CommonSubscriber<PageList<ArticleEntity>>(mView,"获取失败",true){
+            @Override
+            public void onNext(PageList<ArticleEntity> articleEntityPageList) {
+                mView.showArticle(articleEntityPageList);
+            }
+        }));
+    }
 }

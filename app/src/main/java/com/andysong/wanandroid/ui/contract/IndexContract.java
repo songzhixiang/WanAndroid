@@ -20,5 +20,7 @@ public interface IndexContract {
 
     interface Presenter extends BasePresenter<View>{
         void getArticle(int page);
+
+        void getKnowledge(int page,int cid);
     }
 }

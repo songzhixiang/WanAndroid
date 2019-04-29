@@ -3,12 +3,15 @@ package com.andysong.wanandroid.ui.view.adapter;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.design.internal.FlowLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.andysong.wanandroid.R;
+import com.andysong.wanandroid.core.BaseFragment;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.NavigationInfoEntity;
+import com.andysong.wanandroid.ui.view.ArticleDetailsFragment;
 import com.andysong.wanandroid.utils.CommonExKt;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -23,6 +26,16 @@ import java.util.Random;
 public class NavigationAdapter extends BaseQuickAdapter<NavigationInfoEntity, BaseViewHolder> {
 
 //    private Random random;
+
+    private BaseFragment mBaseFragment;
+
+    public BaseFragment getBaseFragment() {
+        return mBaseFragment;
+    }
+
+    public void setBaseFragment(BaseFragment baseFragment) {
+        mBaseFragment = baseFragment;
+    }
 
     public NavigationAdapter(@Nullable List<NavigationInfoEntity> data) {
         super(R.layout.item_navigation, data);
@@ -43,7 +56,12 @@ public class NavigationAdapter extends BaseQuickAdapter<NavigationInfoEntity, Ba
             child.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    ((BaseFragment)getBaseFragment().getParentFragment()).start((ArticleDetailsFragment
+                            .newInstance(TextUtils
+                                            .isEmpty(articleEntity.getProjectLink())?
+                                            articleEntity.getLink():
+                                            articleEntity.getProjectLink()
+                                    ,articleEntity.getTitle())));
                 }
             });
 
