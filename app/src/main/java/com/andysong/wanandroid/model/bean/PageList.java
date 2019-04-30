@@ -77,11 +77,11 @@ public class PageList<T> {
 
 
     public boolean hasNext() {
-        return curPage < pageCount && notEmpty();
+        return curPage <= pageCount && notEmpty();
     }
 
     public boolean hasNextStartWithZero() {
-        return curPage + 1 < pageCount && notEmpty();
+        return curPage + 1 <= pageCount && notEmpty();
     }
 
     public boolean notEmpty() {

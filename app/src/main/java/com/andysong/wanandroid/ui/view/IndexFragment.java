@@ -16,6 +16,7 @@ import com.andysong.wanandroid.ui.contract.IndexContract;
 import com.andysong.wanandroid.ui.presenter.IndexPresenter;
 import com.andysong.wanandroid.ui.view.adapter.IndexAdapter;
 import com.andysong.wanandroid.utils.helpers.IRefreshPage;
+import com.andysong.wanandroid.utils.helpers.ITabClickListener;
 import com.andysong.wanandroid.utils.helpers.RefreshLoadMoreHelper;
 import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -28,7 +29,8 @@ import butterknife.BindView;
  * @author AndySong on 2019/3/20
  * @Blog https://github.com/songzhixiang
  */
-public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements IRefreshPage,IndexContract.View, BaseQuickAdapter.OnItemClickListener {
+public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements
+        IRefreshPage,IndexContract.View, BaseQuickAdapter.OnItemClickListener, ITabClickListener {
 
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
@@ -114,13 +116,13 @@ public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements IR
 
     @Override
     public void showErrorMsg(@NotNull String msg) {
-        refreshLoadMoreHelper.loadError();
         LogUtils.e(msg);
     }
 
     @Override
     public void stateError() {
         refreshLoadMoreHelper.loadError();
+        refreshLoadMoreHelper.getAdapter().setEmptyView(R.layout.base_empty,mRecyclerView);
     }
 
     @Override
@@ -150,6 +152,28 @@ public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements IR
             refreshLoadMoreHelper.onDestroy();
             refreshLoadMoreHelper = null;
         }
+
+    }
+
+    @Override
+    public void onScrollToTop() {
+        if (!isTop()){
+            LogUtils.e("不滑动");
+        }else {
+            mRecyclerView.smoothScrollToPosition(0);
+        }
+
+    }
+
+    @Override
+    public boolean isTop() {
+        //RecyclerView.canScrollVertically(1)的值表示是否能向上滚动，false表示已经滚动到底部
+        //RecyclerView.canScrollVertically(-1)的值表示是否能向下滚动，false表示已经滚动到顶部
+        return mRecyclerView.canScrollVertically(-1);
+    }
+
+    @Override
+    public void onRefresh() {
 
     }
 }

@@ -7,11 +7,8 @@
         <item name="colorPrimaryDark">@color/colorWhite</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/product_family</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+
     </style>
 
-    <style name="AppTheme.AuthScreen" parent="AppTheme.NoActionBar">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
+
 </resources>

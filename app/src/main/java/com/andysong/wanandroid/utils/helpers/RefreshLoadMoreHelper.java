@@ -9,6 +9,7 @@ import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse;
 import com.andysong.wanandroid.utils.itemdecoration.ItemDecorationFactory;
+import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -67,24 +68,34 @@ public class RefreshLoadMoreHelper<T> implements SwipeRefreshLayout.OnRefreshLis
     }
 
     public void loadSuccess(PageList<T> response) {
+        adapter.setEnableLoadMore(true);
         if (firstPage + 1 == response.getCurPage()) {
             items.clear();
         }
+
+
         items.addAll(response.getData());
-        if (firstPage == 0) {
-            adapter.setEnableLoadMore(response.hasNextStartWithZero());
-        } else {
-            adapter.setEnableLoadMore(response.hasNext());
+        if (response.hasNextStartWithZero()){
+            if (firstPage == 0) {
+                adapter.setEnableLoadMore(response.hasNextStartWithZero());
+            } else {
+                adapter.setEnableLoadMore(response.hasNext());
+            }
+            if (currPage > firstPage) {
+                adapter.loadMoreComplete();
+            } else {
+                adapter.notifyDataSetChanged();
+            }
+        }else {
+            //第一页如果不够一页就不显示没有更多数据布局
+            adapter.loadMoreEnd(false);
         }
-        if (currPage > firstPage) {
-            adapter.loadMoreComplete();
-        } else {
-            refreshLayout.setRefreshing(false);
-            adapter.notifyDataSetChanged();
-        }
+        refreshLayout.setRefreshing(false);
+        currPage++;
     }
 
     public void loadError() {
+        adapter.setEnableLoadMore(true);
         if (currPage > firstPage) {
             adapter.loadMoreFail();
         } else {
@@ -109,12 +120,13 @@ public class RefreshLoadMoreHelper<T> implements SwipeRefreshLayout.OnRefreshLis
         currPage = firstPage;
         if (refreshPage != null) {
             refreshPage.loadData();
+            adapter.setEnableLoadMore(false);
         }
     }
 
     @Override
     public void onLoadMoreRequested() {
-        currPage++;
+
         if (refreshPage != null) {
             refreshPage.loadData();
         }

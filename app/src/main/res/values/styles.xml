@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorWhite</item>
         <item name="android:fontFamily">@font/product_family</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -16,16 +16,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.Launcher">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@drawable/splash_background</item>
-    </style>
 
 
-    <style name="AppTheme.AuthScreen" parent="AppTheme.NoActionBar">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
+
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
