@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,6 +57,10 @@ public class TypeTabFragment extends BaseFragment implements IPageContent {
         int position = getArguments().getInt(KEY_POSITION,0);
         List<TreeEntity> children = mTreeEntity.getChildren();
         mTextViewToolbar.setText(mTreeEntity.getName());
+        if (children.size()==1){
+
+            tabLayout.setVisibility(View.GONE);
+        }
         TabHelper tabHelper = new TabHelper(tabLayout
                 ,viewpager
                 ,new TabPageAdapter<>(getChildFragmentManager(),children,this));
