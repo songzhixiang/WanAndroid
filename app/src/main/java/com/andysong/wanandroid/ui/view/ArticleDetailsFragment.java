@@ -2,7 +2,6 @@ package com.andysong.wanandroid.ui.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -34,7 +33,7 @@ public class ArticleDetailsFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_article;
+        return R.layout.fragment_article_content;
     }
 
     @Override
