@@ -30,7 +30,7 @@ public class IndexPresenter extends RxPresenter<IndexContract.View> implements I
         addSubscribe(mDataManager.getArticle(page)
         .compose(RxUtil.rxSchedulerHelper(null))
         .compose(RxUtil.handleResult())
-        .subscribeWith(new CommonSubscriber<PageList<ArticleEntity>>(mView, "获取失败",true) {
+        .subscribeWith(new CommonSubscriber<PageList<ArticleEntity>>(mView, null,true) {
 
             @Override
             public void onNext(PageList<ArticleEntity> articleEntityList) {
@@ -44,7 +44,7 @@ public class IndexPresenter extends RxPresenter<IndexContract.View> implements I
         addSubscribe(mDataManager.getKnowledgeTreeArtcile(page, cid)
         .compose(RxUtil.rxSchedulerHelper(null))
         .compose(RxUtil.handleResult())
-        .subscribeWith(new CommonSubscriber<PageList<ArticleEntity>>(mView,"获取失败",true){
+        .subscribeWith(new CommonSubscriber<PageList<ArticleEntity>>(mView,null,true){
             @Override
             public void onNext(PageList<ArticleEntity> articleEntityPageList) {
                 mView.showArticle(articleEntityPageList);

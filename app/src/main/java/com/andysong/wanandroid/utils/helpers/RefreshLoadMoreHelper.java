@@ -9,6 +9,7 @@ import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse;
 import com.andysong.wanandroid.utils.itemdecoration.ItemDecorationFactory;
+import com.andysong.wanandroid.widget.stateview.StateView;
 import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -25,6 +26,7 @@ public class RefreshLoadMoreHelper<T> implements SwipeRefreshLayout.OnRefreshLis
     private int currPage = firstPage;
 
     private SwipeRefreshLayout refreshLayout;
+    private StateView mStateView;
 
     private List<T> items;
     private BaseQuickAdapter<T, BaseViewHolder> adapter;
@@ -57,11 +59,20 @@ public class RefreshLoadMoreHelper<T> implements SwipeRefreshLayout.OnRefreshLis
         }
     }
 
+
+    public RefreshLoadMoreHelper addStateView(StateView mStateView){
+        this.mStateView = mStateView;
+        return this;
+    }
+
     public void autoRefresh() {
         refreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                refreshLayout.setRefreshing(true);
+                if (null!=mStateView){
+                    mStateView.showLoading();
+                }
+
                 onRefresh();
             }
         });
@@ -91,6 +102,7 @@ public class RefreshLoadMoreHelper<T> implements SwipeRefreshLayout.OnRefreshLis
             adapter.loadMoreEnd(false);
         }
         refreshLayout.setRefreshing(false);
+        mStateView.showContent();
         currPage++;
     }
 
@@ -101,6 +113,10 @@ public class RefreshLoadMoreHelper<T> implements SwipeRefreshLayout.OnRefreshLis
         } else {
             refreshLayout.setRefreshing(false);
         }
+        if (adapter.getData().isEmpty()){
+            mStateView.showRetry();
+        }
+
     }
 
     public void setFirstPage(int firstPage) {
@@ -159,6 +175,7 @@ public class RefreshLoadMoreHelper<T> implements SwipeRefreshLayout.OnRefreshLis
         refreshLayout = null;
         adapter.setOnItemClickListener(null);
         adapter = null;
+        mStateView = null;
         refreshPage = null;
     }
 }

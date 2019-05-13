@@ -71,7 +71,7 @@ public class RxUtil {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doFinally((Action) () -> {
+                .doOnComplete((Action) () -> {
                     if (baseView != null) {
                         baseView.stateMain();
                     }

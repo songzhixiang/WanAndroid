@@ -10,6 +10,7 @@ import android.view.View;
 import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.core.BaseFragment;
 import com.andysong.wanandroid.core.BaseMVPFragment;
+import com.andysong.wanandroid.core.RootFragment;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.ui.contract.IndexContract;
@@ -29,7 +30,7 @@ import butterknife.BindView;
  * @author AndySong on 2019/3/20
  * @Blog https://github.com/songzhixiang
  */
-public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements
+public class IndexFragment extends RootFragment<IndexPresenter> implements
         IRefreshPage,IndexContract.View, BaseQuickAdapter.OnItemClickListener, ITabClickListener {
 
     @BindView(R.id.recyclerview)
@@ -67,11 +68,16 @@ public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements
 
     @Override
     protected void initEventAndData(@Nullable Bundle savedInstanceState) {
-        refreshLoadMoreHelper = new RefreshLoadMoreHelper<>(this, mSwipeRefreshLayout, mRecyclerView, IndexAdapter.class);
+        super.initEventAndData(savedInstanceState);
+        refreshLoadMoreHelper = new RefreshLoadMoreHelper<>(this, mSwipeRefreshLayout, mRecyclerView, IndexAdapter.class).addStateView(getStateView());
         refreshLoadMoreHelper.autoRefresh();
         refreshLoadMoreHelper.setOnItemClickListener(this);
     }
 
+    @Override
+    protected void onRetry() {
+        loadData();
+    }
 
 
     @Override
@@ -122,7 +128,7 @@ public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements
     @Override
     public void stateError() {
         refreshLoadMoreHelper.loadError();
-        refreshLoadMoreHelper.getAdapter().setEmptyView(R.layout.base_empty,mRecyclerView);
+
     }
 
     @Override
@@ -140,10 +146,7 @@ public class IndexFragment extends BaseMVPFragment<IndexPresenter> implements
 
     }
 
-    @Override
-    public void stateMain() {
 
-    }
 
     @Override
     public void onDestroyView() {
