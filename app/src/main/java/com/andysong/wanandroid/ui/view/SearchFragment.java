@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.core.BaseMVPFragment;
+import com.andysong.wanandroid.core.RootFragment;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.History;
 import com.andysong.wanandroid.model.bean.PageList;
@@ -33,6 +34,7 @@ import com.andysong.wanandroid.utils.helpers.IRefreshPage;
 import com.andysong.wanandroid.utils.helpers.RefreshLoadMoreHelper;
 import com.andysong.wanandroid.widget.EmojiRainLayout;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +48,7 @@ import butterknife.OnClick;
  * @author AndySong on 2019/4/1
  * @Blog https://github.com/songzhixiang
  */
-public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements IRefreshPage,TextWatcher, TextView.OnEditorActionListener, SearchContract.View, BaseQuickAdapter.OnItemClickListener {
+public class SearchFragment extends RootFragment<SearchPresenter> implements IRefreshPage,TextWatcher, TextView.OnEditorActionListener, SearchContract.View, BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.ed_search)
     AppCompatEditText mEdSearch;
     @BindView(R.id.iv_edit_clear)
@@ -78,6 +80,7 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
 
     @Override
     protected void initEventAndData(@Nullable Bundle savedInstanceState) {
+        super.initEventAndData(savedInstanceState);
         //emoji init
         mEmojiRainLayout.addEmoji(R.drawable.emoji_1_3);
         mEmojiRainLayout.addEmoji(R.drawable.emoji_2_3);
@@ -94,9 +97,14 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
         mPresenter.queryHistory();
 
         //
-        refreshLoadMoreHelper = new RefreshLoadMoreHelper<>(this, mSwipeRefreshLayout, mRecyclerView, IndexAdapter.class);
-        refreshLoadMoreHelper.autoRefresh();
+        refreshLoadMoreHelper = new RefreshLoadMoreHelper<>(this, mSwipeRefreshLayout, mRecyclerView, IndexAdapter.class).addStateView(getStateView());
+
         refreshLoadMoreHelper.setOnItemClickListener(this);
+    }
+
+    @Override
+    protected void onRetry() {
+
     }
 
 
@@ -238,35 +246,7 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
 
     }
 
-    @Override
-    public void showErrorMsg(@NotNull String msg) {
 
-    }
-
-    @Override
-    public void stateError() {
-
-    }
-
-    @Override
-    public void stateEmpty() {
-
-    }
-
-    @Override
-    public void stateLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void stateMain() {
-
-    }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -290,4 +270,19 @@ public class SearchFragment extends BaseMVPFragment<SearchPresenter> implements 
         hideSoftInput();
     }
 
+    @Override
+    public void showErrorMsg(@NotNull String msg) {
+        ToastUtils.showShort(msg);
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void stateError() {
+        refreshLoadMoreHelper.loadError();
+
+    }
 }

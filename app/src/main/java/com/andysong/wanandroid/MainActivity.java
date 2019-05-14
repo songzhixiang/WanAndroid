@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity {
             loadRootFragment(R.id.fl_container, MainFragment.newInstance());
         }
 
-        StatusBarUtil.setTranslucentForImageView(this,0,flContainer);
+
 //        getNotchParams();
     }
 

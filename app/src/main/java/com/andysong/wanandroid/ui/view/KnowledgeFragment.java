@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.core.BaseFragment;
 import com.andysong.wanandroid.core.BaseMVPFragment;
+import com.andysong.wanandroid.core.RootFragment;
 import com.andysong.wanandroid.model.bean.TreeEntity;
 import com.andysong.wanandroid.ui.contract.KnowledgeContract;
 import com.andysong.wanandroid.ui.presenter.KnowledgePresenter;
@@ -29,7 +31,7 @@ import me.yokeyword.fragmentation.ISupportFragment;
  * @author AndySong on 2019/3/20
  * @Blog https://github.com/songzhixiang
  */
-public class KnowledgeFragment extends BaseMVPFragment<KnowledgePresenter> implements IRefreshPage,KnowledgeContract.View, BaseQuickAdapter.OnItemClickListener {
+public class KnowledgeFragment extends RootFragment<KnowledgePresenter> implements IRefreshPage,KnowledgeContract.View, BaseQuickAdapter.OnItemClickListener {
 
     private RefreshHelper<TreeEntity> refreshHelper;
 
@@ -57,11 +59,16 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowledgePresenter> imple
 
     @Override
     protected void initEventAndData(@Nullable Bundle savedInstanceState) {
-
-        refreshHelper = new RefreshHelper<>(this, mSwipeRefreshLayout, mRecyclerView, KnowledgeTreeAdapter.class);
+        super.initEventAndData(savedInstanceState);
+        refreshHelper = new RefreshHelper<>(this, mSwipeRefreshLayout, mRecyclerView, KnowledgeTreeAdapter.class).withStateView(getStateView());
         ((KnowledgeTreeAdapter)refreshHelper.getAdapter()).setBaseFragment(this);
         refreshHelper.autoRefresh();
         refreshHelper.setOnItemClickListener(this);
+    }
+
+    @Override
+    protected void onRetry() {
+        loadData();
     }
 
     @Override
@@ -90,32 +97,18 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowledgePresenter> imple
 
     @Override
     public void showErrorMsg(@NotNull String msg) {
-        LogUtils.e(msg);
+        Toast.makeText(_mActivity, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void stateError() {
+
         refreshHelper.loadError();
-        refreshHelper.getAdapter().setEmptyView(R.layout.base_empty,mRecyclerView);
-    }
-
-    @Override
-    public void stateEmpty() {
-
-    }
-
-    @Override
-    public void stateLoading() {
 
     }
 
     @Override
     public void hideLoading() {
-
-    }
-
-    @Override
-    public void stateMain() {
 
     }
 }

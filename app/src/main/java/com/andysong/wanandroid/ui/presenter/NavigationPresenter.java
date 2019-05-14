@@ -27,7 +27,7 @@ public class NavigationPresenter extends RxPresenter<NavigationContract.View> im
     @Override
     public void getNavigationInfo() {
         addSubscribe(mDataManager.getNavigationInfo()
-                .compose(RxUtil.rxSchedulerHelper(null))
+                .compose(RxUtil.rxSchedulerHelper(mView))
                 .compose(RxUtil.handleResult())
                 .subscribeWith(new CommonSubscriber<List<NavigationInfoEntity>>(mView,true) {
                     @Override

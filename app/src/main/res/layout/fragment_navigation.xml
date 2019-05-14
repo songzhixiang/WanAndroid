@@ -34,4 +34,13 @@
         android:overScrollMode="never"
         app:layout_constraintLeft_toRightOf="@+id/v_line"
         app:layout_constraintRight_toRightOf="parent"/>
+
+
+    <com.andysong.wanandroid.widget.stateview.StateView
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/stateView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"  />
 </android.support.constraint.ConstraintLayout>

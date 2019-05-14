@@ -7,6 +7,7 @@ import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.BannerEntity;
 import com.andysong.wanandroid.model.bean.PageList;
 import com.andysong.wanandroid.ui.contract.SearchContract;
+import com.andysong.wanandroid.utils.CommonSubscriber;
 import com.blankj.utilcode.util.LogUtils;
 
 import org.reactivestreams.Subscription;
@@ -44,9 +45,10 @@ public class SearchPresenter extends RxPresenter<SearchContract.View> implements
         addSubscribe(mDataManager.getSearchArticles(page,requestBody)
                 .compose(RxUtil.rxSchedulerHelper(null))
                 .compose(RxUtil.handleResult())
-                .subscribe(new Consumer<PageList<ArticleEntity>>() {
+                .subscribeWith(new CommonSubscriber<PageList<ArticleEntity>>(mView,true) {
+
                     @Override
-                    public void accept(PageList<ArticleEntity> articleEntityPageList) throws Exception {
+                    public void onNext(PageList<ArticleEntity> articleEntityPageList) {
                         mView.showSearchResult(articleEntityPageList);
                     }
                 }));

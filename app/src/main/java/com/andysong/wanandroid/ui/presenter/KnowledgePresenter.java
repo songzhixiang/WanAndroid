@@ -31,7 +31,7 @@ public class KnowledgePresenter extends RxPresenter<KnowledgeContract.View> impl
         addSubscribe(mDataManager.getKnowledgeTree()
                 .compose(RxUtil.rxSchedulerHelper(null))
                 .compose(RxUtil.handleResult())
-                .subscribeWith(new CommonSubscriber<List<TreeEntity>>(mView,true) {
+                .subscribeWith(new CommonSubscriber<List<TreeEntity>>(mView,null,true) {
                     @Override
                     public void onNext(List<TreeEntity> treeEntityList) {
                         mView.showKnowledge(treeEntityList);

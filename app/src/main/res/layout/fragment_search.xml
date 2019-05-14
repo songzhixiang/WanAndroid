@@ -121,5 +121,11 @@
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
+        <com.andysong.wanandroid.widget.stateview.StateView
+
+            android:id="@+id/stateView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"  />
+
     </com.andysong.wanandroid.widget.EmojiRainLayout>
 </LinearLayout>

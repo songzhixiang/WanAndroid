@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.core.BaseMVPFragment;
+import com.andysong.wanandroid.core.RootFragment;
 import com.andysong.wanandroid.model.bean.NavigationInfoEntity;
 import com.andysong.wanandroid.ui.contract.NavigationContract;
 import com.andysong.wanandroid.ui.presenter.NavigationPresenter;
@@ -31,7 +32,7 @@ import butterknife.Unbinder;
  * @author AndySong on 2019/3/20
  * @Blog https://github.com/songzhixiang
  */
-public class NavigationFragment extends BaseMVPFragment<NavigationPresenter> implements NavigationContract.View, BaseQuickAdapter.OnItemClickListener {
+public class NavigationFragment extends RootFragment<NavigationPresenter> implements NavigationContract.View, BaseQuickAdapter.OnItemClickListener {
 
     @BindView(R.id.recycler_types)
     RecyclerView mRecyclerViewType;
@@ -63,6 +64,7 @@ public class NavigationFragment extends BaseMVPFragment<NavigationPresenter> imp
 
     @Override
     protected void initEventAndData(@Nullable Bundle savedInstanceState) {
+        super.initEventAndData(savedInstanceState);
         mRecyclerViewNavigation.setLayoutManager(new LinearLayoutManager(getActivity()));
         mNavigationAdapter = new NavigationAdapter(items);
         mNavigationAdapter.setBaseFragment(this);
@@ -75,9 +77,18 @@ public class NavigationFragment extends BaseMVPFragment<NavigationPresenter> imp
         mRecyclerViewType.setAdapter(mTypeAdapter);
         mRecyclerViewType.addOnScrollListener(onTypeScrollListener);
 
+        load();
+    }
+
+    public void load(){
         if (mPresenter != null) {
             mPresenter.getNavigationInfo();
         }
+    }
+
+    @Override
+    protected void onRetry() {
+        load();
     }
 
     @Override
@@ -97,35 +108,7 @@ public class NavigationFragment extends BaseMVPFragment<NavigationPresenter> imp
         mNavigationAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void showErrorMsg(@NotNull String msg) {
 
-    }
-
-    @Override
-    public void stateError() {
-
-    }
-
-    @Override
-    public void stateEmpty() {
-
-    }
-
-    @Override
-    public void stateLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void stateMain() {
-
-    }
 
     private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -225,5 +208,15 @@ public class NavigationFragment extends BaseMVPFragment<NavigationPresenter> imp
         currPos = position;
         items.get(currPos).setSelected(true);
         mTypeAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showErrorMsg(@NotNull String msg) {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 }

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.model.http.response.WanAndroidHttpResponse;
 import com.andysong.wanandroid.utils.itemdecoration.ItemDecorationFactory;
+import com.andysong.wanandroid.widget.stateview.StateView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -22,6 +23,7 @@ public class RefreshHelper<T> implements SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
+    private StateView mStateView;
     private List<T> items;
     private BaseQuickAdapter<T, BaseViewHolder> adapter;
     private IRefreshPage refreshPage;
@@ -53,11 +55,21 @@ public class RefreshHelper<T> implements SwipeRefreshLayout.OnRefreshListener {
         }
     }
 
+
+    public RefreshHelper withStateView(StateView stateView){
+        this.mStateView = stateView;
+        return this;
+    }
+
     public void autoRefresh() {
         refreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                refreshLayout.setRefreshing(true);
+                if (null!=mStateView)
+                {
+                    mStateView.showLoading();
+                }
+
                 onRefresh();
             }
         });
@@ -73,6 +85,9 @@ public class RefreshHelper<T> implements SwipeRefreshLayout.OnRefreshListener {
     }
 
     public void loadSuccess(List<T> response) {
+        if (null!=mStateView){
+            mStateView.showContent();
+        }
         items.clear();
         items.addAll(response);
         refreshLayout.setRefreshing(false);
@@ -81,6 +96,9 @@ public class RefreshHelper<T> implements SwipeRefreshLayout.OnRefreshListener {
 
     public void loadError() {
         refreshLayout.setRefreshing(false);
+        if (adapter.getData().isEmpty()){
+            mStateView.showRetry();
+        }
     }
 
     @Override
