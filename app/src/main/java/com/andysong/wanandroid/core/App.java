@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.support.multidex.MultiDex;
 
+import com.andysong.library.core.net.NetStatusBus;
 import com.andysong.wanandroid.di.component.AppComponent;
 import com.andysong.wanandroid.di.component.DaggerAppComponent;
 import com.andysong.wanandroid.di.module.AppModule;
@@ -36,6 +37,7 @@ public class App extends Application {
         instance = this;
         Utils.init(this);
         Realm.init(this);
+        NetStatusBus.getInstance().init(this);
         registerActivityLifecycleCallbacks(new AppManagerCall());
         registerComponentCallbacks(new ComponentCallbacks2() {
             @Override

@@ -10,8 +10,8 @@ import java.lang.annotation.Target;
  * @data 2019-05-20
  * @discription xxx
  */
-@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
 public @interface NetSubscribe {
-    NetType netType() default NetType.AUTO;
+    Mode mode() default Mode.AUTO;
 }

@@ -3,47 +3,42 @@ package com.andysong.library;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.util.Log;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import com.andysong.library.core.net.NetStatusReceiver;
+import com.andysong.library.core.net.NetworkUtils;
 
 /**
  * @author andysong
  * @data 2019-05-20
  * @discription xxx
  */
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class NetworkCallbackImpl extends ConnectivityManager.NetworkCallback {
 
 
-    private NetStatusReceiver mNetStatusReceiver;
+    private NetStatusReceiver mReceiver;
 
-    public NetworkCallbackImpl(NetStatusReceiver netStatusReceiver) {
-        mNetStatusReceiver = netStatusReceiver;
+    public NetworkCallbackImpl(NetStatusReceiver receiver) {
+        mReceiver = receiver;
     }
 
-    //网络已连接
+
     @Override
     public void onAvailable(Network network) {
         super.onAvailable(network);
+        mReceiver.post(NetworkUtils.getNetType());
     }
 
-    //网络已中断
     @Override
     public void onLost(Network network) {
         super.onLost(network);
+        mReceiver.post(NetworkUtils.getNetType());
     }
 
-    //网络发生变更
     @Override
     public void onCapabilitiesChanged(Network network, NetworkCapabilities networkCapabilities) {
         super.onCapabilitiesChanged(network, networkCapabilities);
-        if (networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)){
-            if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)){
-                //类型是wifi
-
-            }else {
-                //类型为其他
-            }
-        }
     }
 }

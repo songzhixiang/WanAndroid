@@ -15,9 +15,14 @@ import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.andysong.library.core.net.NetStatusBus;
+import com.andysong.library.core.net.NetStatusReceiver;
+import com.andysong.library.core.net.NetSubscribe;
+import com.andysong.library.core.net.NetType;
 import com.andysong.wanandroid.core.BaseActivity;
 import com.andysong.wanandroid.ui.view.MainFragment;
 import com.andysong.wanandroid.utils.StatusBarUtil;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.RomUtils;
 
 import java.util.List;
@@ -42,8 +47,7 @@ public class MainActivity extends BaseActivity {
         if (findFragment(MainFragment.class) == null) {
             loadRootFragment(R.id.fl_container, MainFragment.newInstance());
         }
-
-
+        NetStatusBus.getInstance().register(this);
 //        getNotchParams();
     }
 
@@ -99,6 +103,29 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    @NetSubscribe()
+    public void wifiChange(NetType netType) {
+        LogUtils.e(netType.name() + "<<<<<<<<<<BlankFragment");
+        switch (netType) {
+            case NONE:
+                LogUtils.e("网络连接中断...");
+                break;
+
+            case WIFI:
+
+                LogUtils.e("wifi已连接");
+                break;
+
+            case MOBILE:
+
+                LogUtils.e("移动网络已连接");
+                break;
+
+            default:
+        }
+
+    }
+
 
 
 
@@ -107,4 +134,9 @@ public class MainActivity extends BaseActivity {
         context.startActivity(starter);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        NetStatusBus.getInstance().unregister(this);
+    }
 }
