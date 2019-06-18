@@ -7,7 +7,6 @@ import android.widget.Button;
 
 import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.Spark;
-import com.andysong.wanandroid.core.BaseFragment;
 import com.andysong.wanandroid.core.BaseMVPFragment;
 import com.andysong.wanandroid.ui.contract.LoginContract;
 import com.andysong.wanandroid.ui.presenter.LoginPresenter;

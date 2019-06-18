@@ -23,6 +23,11 @@ android {
 
         resConfigs "zh-rCN"
 
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi', 'x86' //, 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+
     }
     buildTypes {
 
@@ -105,6 +110,10 @@ dependencies {
     implementation project(path: ':library')
 
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
+
+    implementation 'com.tencent.bugly:crashreport_upgrade:1.4.0'
+
+    implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
 
 
 

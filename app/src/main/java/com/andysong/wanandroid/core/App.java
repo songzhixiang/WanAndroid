@@ -12,6 +12,7 @@ import com.andysong.wanandroid.di.component.DaggerAppComponent;
 import com.andysong.wanandroid.di.module.AppModule;
 import com.andysong.wanandroid.di.module.HttpModule;
 import com.blankj.utilcode.util.Utils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 
 import io.realm.Realm;
@@ -57,6 +58,8 @@ public class App extends Application {
                 //若想兼容Android 4.0 则使用，否知直接使用OnTrimMemory（）
             }
         });
+
+        CrashReport.initCrashReport(getApplicationContext(), "68e92bd04f", false);
     }
 
     public static AppComponent getAppComponent(){
