@@ -3,6 +3,13 @@ apply plugin: 'realm-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
+
+// 加载 keystore.properties 文件
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
@@ -25,22 +32,58 @@ android {
 
         ndk {
             // 设置支持的SO库架构
-            abiFilters 'armeabi', 'x86' //, 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'armeabi', 'x86','armeabi-v7a' //, 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
 
     }
+
+
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['RELEASE_STORE_FILE'])
+            storePassword keystoreProperties['RELEASE_KEYSTORE_PASSWORD']
+            keyAlias keystoreProperties['RELEASE_KEY_ALIAS']
+            keyPassword keystoreProperties['RELEASE_KEY_PASSWORD']
+        }
+    }
+
     buildTypes {
 
-        debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-
-
         release {
+            //签名配置
+            signingConfig signingConfigs.release
+            //混淆编译
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            //开启压缩
+//            zipAlignEnabled true
+//            //移除无用的资源文件
+//            shrinkResources true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+
+        debug {
+
+        }
+    }
+
+
+    dexOptions{
+        jumboMode = true
+        javaMaxHeapSize "4g"
+        preDexLibraries = false
+        additionalParameters = [
+                //配置Multidex参数
+                '--multi-dex',//多dex分包
+                '--set-max-idx-number=50000',//每个包方法数上限
+                '--main-dex-list='+'/multidex-config.txt',//打包到主class.dex的文件列表
+                '--minimal-main-dex'
+        ]
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     compileOptions {
@@ -111,12 +154,38 @@ dependencies {
 
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
 
+
+
     implementation 'com.tencent.bugly:crashreport_upgrade:1.4.0'
 
+
     implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
+
+
+    //tinker的核心库
+    implementation 'com.tencent.tinker:tinker-android-lib:1.9.9'
+
+    //美团多渠道打包
+    implementation 'com.meituan.android.walle:library:1.1.6'
 
 
 
 
 }
+
+apply plugin: 'walle'
+
+walle {
+    // 指定渠道包的输出路径
+    apkOutputFolder = new File("${project.buildDir}/outputs/channels");
+    // 定制渠道包的APK的文件名称
+    apkFileNameFormat = '${appName}-${packageName}-${channel}-${buildType}-v${versionName}-${versionCode}-${buildTime}.apk';
+    // 渠道配置文件
+    channelFile = new File("${project.getProjectDir()}/channel")
+}
+
+
+
+// 依赖插件脚本
+apply from: 'tinker-support.gradle'
 

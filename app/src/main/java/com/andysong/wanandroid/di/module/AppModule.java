@@ -1,6 +1,7 @@
 package com.andysong.wanandroid.di.module;
 
-import com.andysong.wanandroid.core.App;
+import android.app.Application;
+
 import com.andysong.wanandroid.model.DataManager;
 import com.andysong.wanandroid.model.db.DBHelper;
 import com.andysong.wanandroid.model.db.RealmHelper;
@@ -18,15 +19,15 @@ import dagger.Provides;
  */
 @Module
 public class AppModule {
-    private final App application;
+    private final Application application;
 
-    public AppModule(App application) {
+    public AppModule(Application application) {
         this.application = application;
     }
 
     @Provides
     @Singleton
-    App provideApplicationContext() {
+    Application provideApplicationContext() {
         return application;
     }
 

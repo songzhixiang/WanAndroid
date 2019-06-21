@@ -18,15 +18,12 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
+import com.andysong.wanandroid.R;
+import com.andysong.wanandroid.core.SampleApplicationLike;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-
-import com.andysong.wanandroid.R;
-import com.andysong.wanandroid.core.App;
-
-
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -101,7 +98,7 @@ public class EmojiRainLayout extends PercentFrameLayout {
     }
 
     public void addEmoji(Bitmap emoji) {
-        mEmojis.add(new BitmapDrawable(App.getInstance().getResources(), emoji));
+        mEmojis.add(new BitmapDrawable(SampleApplicationLike.getInstance().getResources(), emoji));
     }
 
     public void addEmoji(Drawable emoji) {
@@ -109,7 +106,7 @@ public class EmojiRainLayout extends PercentFrameLayout {
     }
 
     public void addEmoji(@DrawableRes int resId) {
-        mEmojis.add(ContextCompat.getDrawable(App.getInstance(), resId));
+        mEmojis.add(ContextCompat.getDrawable(SampleApplicationLike.getInstance(), resId));
     }
 
     public void clearEmojis() {
@@ -187,7 +184,7 @@ public class EmojiRainLayout extends PercentFrameLayout {
     }
 
     private int getWindowHeight() {
-        final WindowManager windowManager = ((WindowManager) App.getInstance().getApplicationContext()
+        final WindowManager windowManager = ((WindowManager) SampleApplicationLike.getInstance().getApplicationContext()
                 .getSystemService(Context.WINDOW_SERVICE));
         Point point = new Point();
         windowManager.getDefaultDisplay().getSize(point);
@@ -215,7 +212,7 @@ public class EmojiRainLayout extends PercentFrameLayout {
     }
 
     private ImageView generateEmoji(Drawable emojiDrawable) {
-        ImageView emoji = new ImageView(App.getInstance());
+        ImageView emoji = new ImageView(SampleApplicationLike.getInstance());
         emoji.setImageDrawable(emojiDrawable);
         final int width = (int) (EMOJI_STANDARD_SIZE * (1.0 + Randoms.positiveGaussian()));
         final int height = (int) (EMOJI_STANDARD_SIZE * (1.0 + Randoms.positiveGaussian()));
@@ -241,6 +238,6 @@ public class EmojiRainLayout extends PercentFrameLayout {
 
     private int dip2px(float dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                App.getInstance().getResources().getDisplayMetrics());
+                SampleApplicationLike.getInstance().getResources().getDisplayMetrics());
     }
 }

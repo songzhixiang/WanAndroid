@@ -19,7 +19,7 @@ public abstract class BaseMVPActivity<P extends BasePresenter> extends BaseActiv
 
     protected ActivityComponent getActivityComponent(){
         return  DaggerActivityComponent.builder()
-                .appComponent(App.getAppComponent())
+                .appComponent(SampleApplicationLike.getAppComponent())
                 .activityModule(getActivityModule())
                 .build();
     }

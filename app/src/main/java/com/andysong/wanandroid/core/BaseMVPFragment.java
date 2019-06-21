@@ -22,7 +22,7 @@ public abstract class BaseMVPFragment<P extends BasePresenter> extends BaseFragm
 
     protected FragmentComponent getFragmentComponent(){
         return DaggerFragmentComponent.builder()
-                .appComponent(App.getAppComponent())
+                .appComponent(SampleApplicationLike.getAppComponent())
                 .fragmentModule(getFragmentModule())
                 .build();
     }

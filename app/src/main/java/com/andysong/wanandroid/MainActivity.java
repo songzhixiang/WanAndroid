@@ -4,26 +4,20 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.DisplayCutout;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowInsets;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.andysong.library.core.net.NetStatusBus;
-import com.andysong.library.core.net.NetStatusReceiver;
 import com.andysong.library.core.net.NetSubscribe;
 import com.andysong.library.core.net.NetType;
 import com.andysong.wanandroid.core.BaseActivity;
 import com.andysong.wanandroid.ui.view.MainFragment;
-import com.andysong.wanandroid.utils.StatusBarUtil;
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.RomUtils;
 
 import java.util.List;
 

@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.andysong.wanandroid.core.App
+import com.andysong.wanandroid.core.SampleApplicationLike
 import java.io.File
 import java.util.*
 
@@ -26,7 +26,7 @@ var View.scale: Float
         scaleY = value
         scaleX = value
     }
-val PATH_DATA = App.getInstance().getCacheDir().getAbsolutePath() + File.separator + "data"
+val PATH_DATA = SampleApplicationLike.getInstance().getCacheDir().getAbsolutePath() + File.separator + "data"
 
 fun Int.toPx(context: Context): Int {
     val density = context.resources.displayMetrics.density
