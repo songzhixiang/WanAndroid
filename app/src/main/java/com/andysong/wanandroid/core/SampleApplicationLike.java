@@ -5,14 +5,20 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 import android.widget.Toast;
 
 import com.andysong.library.core.net.NetStatusBus;
+import com.andysong.wanandroid.BuildConfig;
+import com.andysong.wanandroid.core.task.NetStatusBusTask;
+import com.andysong.wanandroid.core.task.RealmTask;
+import com.andysong.wanandroid.core.task.UtilsTask;
 import com.andysong.wanandroid.di.component.AppComponent;
 import com.andysong.wanandroid.di.component.DaggerAppComponent;
 import com.andysong.wanandroid.di.module.AppModule;
 import com.andysong.wanandroid.di.module.HttpModule;
+import com.andysong.wanandroid.utils.task.TaskDispatcher;
 import com.blankj.utilcode.util.Utils;
 import com.meituan.android.walle.WalleChannelReader;
 import com.tencent.bugly.Bugly;
@@ -60,15 +66,46 @@ public class SampleApplicationLike extends DefaultApplicationLike {
 
         instance = getApplication();
 
-        Utils.init(getApplication());
+//        Utils.init(getApplication());
 
-        Realm.init(getApplication());
+//        Realm.init(getApplication());
 
-        Utils.init(getApplication());
+//        NetStatusBus.getInstance().init(getApplication());
 
-        NetStatusBus.getInstance().init(getApplication());
+        TaskDispatcher.init(getApplication());
+
+        TaskDispatcher dispatcher = TaskDispatcher.createInstance();
+
+        dispatcher.addTask(new UtilsTask())
+                .addTask(new RealmTask())
+                .addTask(new NetStatusBusTask())
+                .start();
+
+        //对于设置了依赖关系的，必须在onCreate执行完成的,这里调用等待
+        dispatcher.await();
+
+        initStrictMode();
 
         registerActivityLifecycleCallback(new AppManagerCall());
+    }
+
+    private void initStrictMode() {
+        if (BuildConfig.DEBUG){
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectCustomSlowCalls()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()
+                    .penaltyLog()//logcat中打印违规信息
+                    .build());
+
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .setClassInstanceLimit(SampleApplicationLike.class,1)
+                    .detectLeakedClosableObjects()//API等级11
+                    .penaltyLog()
+                    .build());
+        }
     }
 
     private void configTinker() {

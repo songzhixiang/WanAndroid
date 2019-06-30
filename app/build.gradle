@@ -172,6 +172,12 @@ dependencies {
 
     implementation 'me.weishu:epic:0.3.6'
 
+    implementation 'com.android.support:asynclayoutinflater:28.0.0'
+
+
+    implementation 'com.zhangyue.we:x2c-lib:1.0.6'
+    annotationProcessor 'com.zhangyue.we:x2c-apt:1.1.2'
+
 
 }
 

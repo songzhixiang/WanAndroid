@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.andysong.wanandroid.R;
 import com.andysong.wanandroid.core.BaseFragment;
-import com.andysong.wanandroid.core.BaseMVPFragment;
 import com.andysong.wanandroid.core.RootFragment;
 import com.andysong.wanandroid.model.bean.ArticleEntity;
 import com.andysong.wanandroid.model.bean.PageList;
