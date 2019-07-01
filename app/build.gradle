@@ -179,6 +179,11 @@ dependencies {
     annotationProcessor 'com.zhangyue.we:x2c-apt:1.1.2'
 
 
+    implementation ('com.aliyun.ams:alicloud-android-httpdns:1.1.7@aar'){
+        transitive true
+    }
+
+
 }
 
 apply plugin: 'walle'

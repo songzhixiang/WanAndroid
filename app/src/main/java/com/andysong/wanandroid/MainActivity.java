@@ -56,45 +56,45 @@ public class MainActivity extends BaseActivity {
     }
 
     //这段代码主要是针对，如果SplashActivity只是一个展示作用，完全没必要写，直接使用MainActivity，然后在Mainifest添加主题，在onCreate又替换回来
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-
-        //优雅获取每个方法的耗时
-//        LayoutInflaterCompat.setFactory2(getLayoutInflater(), new LayoutInflater.Factory2() {
-//            @Override
-//            public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-//                if (TextUtils.equals("TextView",name)){
-//                    //创建自定义的View，然后return回去
-//                }
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
 //
-//                //hook一下，获取控件的创建耗时
-//                long startTime = System.currentTimeMillis();
-//                View view = getDelegate().createView(parent, name, context, attrs);
-//                LogUtils.e(name+" cost"+(System.currentTimeMillis() - startTime));
-//                return null;
-//            }
+//        //优雅获取每个方法的耗时
+////        LayoutInflaterCompat.setFactory2(getLayoutInflater(), new LayoutInflater.Factory2() {
+////            @Override
+////            public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+////                if (TextUtils.equals("TextView",name)){
+////                    //创建自定义的View，然后return回去
+////                }
+////
+////                //hook一下，获取控件的创建耗时
+////                long startTime = System.currentTimeMillis();
+////                View view = getDelegate().createView(parent, name, context, attrs);
+////                LogUtils.e(name+" cost"+(System.currentTimeMillis() - startTime));
+////                return null;
+////            }
+////
+////            @Override
+////            public View onCreateView(String name, Context context, AttributeSet attrs) {
+////                return null;
+////            }
+////        });
 //
+//
+//        //异步inflater,但是失去了系统向下兼容的效果，例如textview变成appcompattextview
+//        new AsyncLayoutInflater(MainActivity.this).inflate(R.layout.layout_content, null, new AsyncLayoutInflater.OnInflateFinishedListener() {
 //            @Override
-//            public View onCreateView(String name, Context context, AttributeSet attrs) {
-//                return null;
+//            public void onInflateFinished(@NonNull View view, int i, @Nullable ViewGroup viewGroup) {
+//                setContentView(view);
+//                //
 //            }
 //        });
-
-
-        //异步inflater,但是失去了系统向下兼容的效果，例如textview变成appcompattextview
-        new AsyncLayoutInflater(MainActivity.this).inflate(R.layout.layout_content, null, new AsyncLayoutInflater.OnInflateFinishedListener() {
-            @Override
-            public void onInflateFinished(@NonNull View view, int i, @Nullable ViewGroup viewGroup) {
-                setContentView(view);
-                //
-            }
-        });
-
-        setTheme(R.style.AppTheme);
-        super.onCreate(savedInstanceState);
-        //setContentView();
-//        X2C.setContentView(MainActivity.this,R.layout.activity_main);
-    }
+//
+//        setTheme(R.style.AppTheme);
+//        super.onCreate(savedInstanceState);
+//        //setContentView();
+////        X2C.setContentView(MainActivity.this,R.layout.activity_main);
+//    }
 
     /**
      * 获得刘海区域信息
